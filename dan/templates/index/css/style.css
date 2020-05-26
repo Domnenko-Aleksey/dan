@@ -75,7 +75,7 @@ header {
 	z-index: 999;
 	box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.1);
 	color: #ffffff;
-	background-color: #d80070;
+	background-color: #4512ac;
 	padding: 15px 0;
 }
 
@@ -134,8 +134,8 @@ section {
     align-items: center;
     min-height: 80vh;
     box-sizing: border-box;
-    background: linear-gradient(to right, rgb(255, 0, 132), rgb(51, 0, 27));
-    background-position: 50% 50%;
+    background: linear-gradient(to right, rgb(55, 0, 225), rgb(69, 18, 172));
+    background-position: 50% 50%; 
     background-size: cover;
     flex-direction: column;
     justify-content: space-between;
@@ -290,6 +290,26 @@ footer {
 
 	.mainpage_block_right{
 	}
+}
+
+@media screen and (max-width:320px) {
+
+	.mainpage_title {
+		font-size: 40px;
+	}
+
+	.mainpage_text {
+		font-size: 21px;
+	}
+
+	.mainpage_img {
+		display: none; !important
+	}
+
+	.p_40_20 {
+    box-sizing: border-box;
+	}
+
 }
 
 
