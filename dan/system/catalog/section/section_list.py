@@ -3,10 +3,10 @@ from classes.Section import Section
 import sys
 sys.path.append('system/catalog/classes')
 
-
 def section_list(SITE):
     print('FUNCTION -> system-> calalog -> section -> list')
 
+    SITE.addHeadFile('/templates/system/css/style.css')
     section_id = SITE.p[2]
 
     CATALOG = Catalog(SITE)
@@ -14,7 +14,41 @@ def section_list(SITE):
     section = SECTION.getSection(section_id)
     catalog = CATALOG.getItem(section['catalog_id'])
 
-    row_out = '<tr><td>* * ТЕСТ * *<td><tr>'
+    # Breadcrumbs
+    data = {}
+    data['catalog_id'] = catalog['id']
+    data['parent_id'] = section['parent_id']
+    breadcrubmps_list = SECTION.breadcrumbsPath(data)[::-1]
+
+    breadcrumbs = ''
+
+    if (len(breadcrubmps_list) > 0):
+        for i in breadcrubmps_list:
+            breadcrumbs += '<svg><use xlink:href="/templates/system/svg/sprite.svg#arrow_right_1"></use></svg>'
+            breadcrumbs += '<a href="/system/catalog/section/' + str(i['id']) + '">' + i['name'] + '</a>'
+
+    rows = SECTION.getItems(section_id)
+
+    row_out = ''
+    if (rows):
+        i = 1
+        for row in rows:
+            status_tr_class = ''
+            if row['status'] == 0:
+                status_tr_class = 'class="admin_table_tr_unpub"'
+
+            row_out +=  f'''<tr { status_tr_class }>
+                <td>{ i }</td>
+                <td>
+                    <div class="flex_row contextmenu_wrap">
+                        <svg class="contextmenu_ico" title="Действия" data-id="{ row['id'] }">
+                            <use xlink:href="/templates/system/svg/sprite.svg#menu_3"></use>
+                        </svg>
+                    </div>
+                </td>
+                <td><a href="/system/catalog/item/edit/{ row['id'] }">{ row['name'] }</a></td>
+            </tr>'''
+            i += 1
 
     SITE.content += f'''<div class="bg_gray">
         <script>window.addEventListener("DOMContentLoaded", function(){{
@@ -32,10 +66,15 @@ def section_list(SITE):
         <div class="breadcrumbs">
             <a href="/system/"><svg class="home"><use xlink:href="/templates/system/svg/sprite.svg#home"></use></svg></a> 
             <svg><use xlink:href="/templates/system/svg/sprite.svg#arrow_right_1"></use></svg>
-            <span>***</span>
+            <a href="/system/catalog/cat">Каталог</a>
+            <svg><use xlink:href="/templates/system/svg/sprite.svg#arrow_right_1"></use></svg>
+			<a href="/system/catalog/cat/{ catalog['id'] }">{ catalog['name'] }</a>
+            { breadcrumbs }
+            <svg><use xlink:href="/templates/system/svg/sprite.svg#arrow_right_1"></use></svg>
+            <span>{ section['name'] }</span>
         </div>
         <div class="flex_row_start">
-            <a href="/system/section/item_add/" target="blank" class="ico_rectangle_container">
+            <a href="/system/catalog/item/add/{ section_id }" target="blank" class="ico_rectangle_container">
                 <svg><use xlink:href="/templates/system/svg/sprite.svg#paper_add"></use></svg>
                 <div class="ico_rectangle_text">Добавить элемент</div>
             </a>
@@ -46,7 +85,7 @@ def section_list(SITE):
         </div>
         <table class="admin_table even_odd">
             <tr>
-                <th style="width:50px;">Id</th>
+                <th style="width:50px;">№</th>
                 <th style="width:50px;">&nbsp;</th>
                 <th>Наменование</th>
             </tr>

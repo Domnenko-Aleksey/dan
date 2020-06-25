@@ -22,7 +22,7 @@ def cat_sec_list(SITE):
             if row['status'] == 0:
                 status_tr_class = 'class="admin_table_tr_unpub"' 
 
-            row_out += f''' <tr { status_tr_class }>
+            row_out += f'''<tr { status_tr_class }>
                 <td>{ i }</td>
                 <td>
                     <div class="flex_row contextmenu_wrap">
@@ -72,7 +72,7 @@ def cat_sec_list(SITE):
         </div>
         <table class="admin_table even_odd">
             <tr>
-                <th style="width:50px;">Id</th>
+                <th style="width:50px;">№</th>
                 <th style="width:50px;">&nbsp;</th>
                 <th>Наменование</th>
             </tr>

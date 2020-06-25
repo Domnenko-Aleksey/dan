@@ -2,6 +2,7 @@ class Section:
     def __init__(self, SITE):
         self.db = SITE.db
         self._tree_result = []
+        self._breadcrumbs_path = []
 
     def getSection(self, id):
         sql = "SELECT `id`, `catalog_id`, `parent_id`, `name`, `text`, `data`, `status`, `ordering` FROM sections WHERE id = %s"
@@ -15,6 +16,12 @@ class Section:
         else:
             sql = "SELECT `id`, `parent_id`, `name`, `text`, `data`, `status` FROM sections WHERE catalog_id = %s ORDER BY ordering"
             self.db.execute(sql, catalog_id)
+        rows = self.db.fetchall()
+        return rows if len(rows) > 0 else False
+
+    def getItems(self, section_id):
+        sql = "SELECT * FROM items WHERE section_id = %s ORDER BY ordering"
+        self.db.execute(sql, section_id)
         rows = self.db.fetchall()
         return rows if len(rows) > 0 else False
 
@@ -127,10 +134,12 @@ class Section:
 
     def tree(self, catalog_id):
         rows = self.getSectionsByCatalogId(catalog_id)
-        self._recursion(rows)
+        if rows:
+            self._tree_recursion(rows)
         return self._tree_result
 
-    def _recursion(self, rows, parent=0, level=-1):
+
+    def _tree_recursion(self, rows, parent=0, level=-1):
         level += 1
         for row in rows:
             if int(row['parent_id']) == parent:
@@ -141,5 +150,24 @@ class Section:
                     'status': row['status'],
                     'level': level
                 })
-                self._recursion(rows, row['id'], level)
+                self._tree_recursion(rows, row['id'], level)
+        return
+
+
+    def breadcrumbsPath(self, data):
+        r = self.getSectionsByCatalogId(data['catalog_id'])
+        self._breadcrumbs_recursion(parent_id = data['parent_id'], rows = r)
+        return self._breadcrumbs_path
+
+
+    def _breadcrumbs_recursion(self, parent_id, rows):
+        print('parent_id', parent_id)
+        for row in rows:
+            if int(row['id']) == parent_id:
+                self._breadcrumbs_path.append({
+                    'id': row['id'],
+                    'name': row['name'],
+                })
+                print('RECURSION')
+                self._breadcrumbs_recursion(row['parent_id'], rows)
         return
