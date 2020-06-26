@@ -19,5 +19,15 @@ def mainpage(SITE):
                 <div class="ico_rectangle_text">Помощь</div>
             </a>
         </div>
+        <div class="flex_row_start">
+            <a href="/system/catalog/cat" class="ico_square_container">
+                <div><svg><use xlink:href="/templates/system/svg/sprite.svg#folder_add"></use></svg></div>
+                <div class="ico_square_text">Каталог</div>
+            </a>
+            <a href="/system/catalog/chars" class="ico_square_container">
+                <div><svg><use xlink:href="/templates/system/svg/sprite.svg#folder_add"></use></svg></div>
+                <div class="ico_square_text">Свойства</div>
+            </a>
+        </div>
     </div>
     '''

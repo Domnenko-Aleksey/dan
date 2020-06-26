@@ -59,6 +59,13 @@ h1 span.hint {
     color: var(--color-inactive);
 }
 
+td {
+    padding: 0;
+    vertical-align: top;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 16px;
+}
+
 .bg_white, .bg_gray {
     min-height: calc(100vh - 80px);
     overflow: hidden;

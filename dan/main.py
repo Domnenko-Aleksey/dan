@@ -75,7 +75,9 @@ def site(request):
 
 app = web.Application()
 aiohttp_jinja2.setup(app, loader=jinja2.FileSystemLoader('templates'))
-app.add_routes([web.static('/templates', 'templates'),
+app.add_routes([web.static('/plugins', 'plugins'),
+                web.static('/lib', 'lib'),
+                web.static('/templates', 'templates'),
                 web.static('/media', 'media'),
                 web.get('/ws', ws),  # Веб-сокеты
                 web.get('/edit/{url:.*}', edit),  # Режим визуального редактирования

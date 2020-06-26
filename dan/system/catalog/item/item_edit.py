@@ -7,6 +7,7 @@ sys.path.append('system/catalog/classes')
 
 def item_edit(SITE):
     print('PATH -> system/catalog/item/edit')
+    SITE.addHeadFile('/plugins/ckeditor/ckeditor.js')
 
     CATALOG = Catalog(SITE)
     SECTION = Section(SITE)
@@ -92,7 +93,10 @@ def item_edit(SITE):
 					</div>
 				</div>
 				<div class="flex_row p_5_20">
-					<textarea class="input" name="text" style="width:100%;height:100px;">''' + item['text'] + '''</textarea>
+                    <div class="tc_item_l">Текст</div>
+                    <div class="tc_item_r flex_grow"> 
+					    <textarea id="editor1" name="text">''' + item['text'] + '''</textarea>
+                    </div>
 				</div>
                 <div class="flex_row p_5_20">
       				<div class="tc_item_l">Данные</div>
@@ -118,6 +122,12 @@ def item_edit(SITE):
 				</div>
 			</div>
             <input class="input" name="section_id" type="hidden" value="''' + str(section_id) + '''">
+            <script type="text/javascript">
+                CKEDITOR.replace( 'editor1', {
+                    height: '400px',
+                    filebrowserBrowseUrl : '/system/plugins/filemanager'
+                });
+            </script>
 		</form>
     </div>
     '''
