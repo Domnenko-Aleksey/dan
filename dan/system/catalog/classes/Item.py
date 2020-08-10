@@ -86,7 +86,7 @@ class Item:
         sql = "SELECT MAX(ordering) ord FROM items WHERE section_id = %s"
         self.db.execute(sql, section_id)
         row = self.db.fetchone()
-        return row['ord'] if len(row) > 0 else 1
+        return row['ord'] if row['ord'] is not None else 0
 
     
     def pub(self, type, id):
@@ -103,8 +103,9 @@ class Item:
         return self.getItem(id)['section_id']
     
     def delete(self, id):
-        item = self.getItem(['id', 'section_id'])
+        print('------------------ID', id)
+        item = self.getItem(id)
+        print('------------------ITEM', item)
         sql = "DELETE FROM items WHERE id = %s"
-        self.db.execute(sql, item['section_id'])
-    
-        return cat_id
+        self.db.execute(sql, id)
+        return item['section_id']

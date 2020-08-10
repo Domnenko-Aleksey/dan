@@ -1,0 +1,16 @@
+.tc_item_l {
+    height: 40px;
+}
+
+.img_warn {
+	padding-left: 40px;
+	color: #FF0000;
+}
+
+#drag_trg {
+	position: relative;
+}
+
+.drag_drop_ico {
+	margin: 5px;
+}

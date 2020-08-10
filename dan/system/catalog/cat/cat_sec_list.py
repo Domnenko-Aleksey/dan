@@ -61,11 +61,19 @@ def cat_sec_list(SITE):
                 <svg><use xlink:href="/templates/system/svg/sprite.svg#folder_add"></use></svg>
                 <div class="ico_rectangle_text">Добавить раздел</div>
             </a>
-            <a href="/system/section/item_add/" target="blank" class="ico_rectangle_container">
+            <a href="/system/catalog/item/add/{ catalog_id }" target="blank" class="ico_rectangle_container">
                 <svg><use xlink:href="/templates/system/svg/sprite.svg#paper_add"></use></svg>
                 <div class="ico_rectangle_text">Добавить элемент</div>
             </a>
-            <a href="/system/section/help" target="blank" class="ico_rectangle_container">
+			<a href="/system/catalog/settings/edit/{ catalog_id }" target="blank" class="ico_rectangle_container">
+				<svg><use xlink:href="/templates/system/svg/sprite.svg#gear"></use></svg>
+				<div class="ico_rectangle_text">Настройки</div>
+			</a>
+			<a href="/system/catalog/char/{ catalog_id }" target="blank" class="ico_rectangle_container">
+				<svg><use xlink:href="/templates/system/svg/sprite.svg#chars"></use></svg>
+				<div class="ico_rectangle_text">Характеристики</div>
+			</a>
+            <a href="/system/catalog/help" target="blank" class="ico_rectangle_container">
                 <svg><use xlink:href="/templates/system/svg/sprite.svg#help"></use></svg>
                 <div class="ico_rectangle_text">Помощь</div>
             </a>

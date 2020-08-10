@@ -48,17 +48,9 @@ def item_edit(SITE):
     tabu_level = 1000
     if (rows):
         for row in rows:
-
-            if row['id'] == section['id']:
-                # Если это текущий раздел, не отображать его и дочерние разделы
-                tabu_level = row['level']
-                continue
-
             if row['level'] <= tabu_level:
-                # Вышли из дочерних разделов текущего раздела - всё сбрасываем
-                tabu_level = 1000
                 level = '&nbsp;-&nbsp;' * row['level']
-                selected = 'selected' if row['id'] == section['parent_id'] else ''
+                selected = 'selected' if row['id'] == section['id'] else ''
                 sec_options += f'''<option { selected } value="{ row['id'] }">{ level }{ row['name'] }</option>'''
 
     SITE.content += '''<div class="bg_gray">

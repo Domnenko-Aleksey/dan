@@ -3,9 +3,14 @@ import sys
 sys.path.append('system/catalog/cat')
 sys.path.append('system/catalog/section')
 sys.path.append('system/catalog/item')
+sys.path.append('system/catalog/char')
+sys.path.append('system/catalog/settings')
 from cat import cat
 from section import section
 from item import item
+from char import char
+from settings import settings
+
 
 
 def catalog(SITE):
@@ -15,9 +20,9 @@ def catalog(SITE):
         '': cat,  # Управление каталогами
         'cat': cat,
         'section': section,
-        'item': item
-        # 'settings': settings,
-        # 'char': char
+        'item': item,
+        'char': char,
+        'settings': settings
     }
 
     if (SITE.p[1] not in functions):

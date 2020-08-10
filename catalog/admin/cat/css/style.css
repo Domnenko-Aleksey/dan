@@ -1,0 +1,12 @@
+#url_status{
+	display: inline-block;
+	margin-left: 10px;
+}
+
+.admin_table_td_num{
+	width: 40px;
+}
+
+.admin_table_td_name{
+	width: 250px;
+}

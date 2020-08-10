@@ -6,17 +6,29 @@ import pymysql.cursors
 import sys
 sys.path.append('classes')
 from classes.Site import Site
+sys.path.append('index')
+import index
 sys.path.append('system')
 import system
+sys.path.append('graph')
+import graph
 
 
 @aiohttp_jinja2.template('index/index.html')
-async def index(request):
+async def index_r(request):
     # Основной режим вывода содержимого
     SITE = site(request)
     print('************************************')
 
-    return {'test_1': 'TEST 1', 'test_2': 'TEST 2'}
+    SITE.post = await request.post()  # Ждём получение файлов методом POST
+    r = index.router(SITE)
+
+    if r and 'redirect' in r:
+        return web.HTTPFound(r['redirect'])
+
+    auth = 1
+
+    return {'AUTH': auth, 'content': SITE.content, 'head': SITE.getHead(), 'test_1': 'TEST 1', 'test_2': 'TEST 2'}
     # return web.Response(text=text)
 
 async def ws(request):
@@ -83,7 +95,7 @@ app.add_routes([web.static('/plugins', 'plugins'),
                 web.get('/edit/{url:.*}', edit),  # Режим визуального редактирования
                 web.get('/system/{url:.*}', system_r),  # Админка
                 web.post('/system/{url:.*}', system_r),  # Админка
-                web.get('/{url:.*}', index)])
+                web.get('/{url:.*}', index_r)])
 
 if __name__ == '__main__':
     web.run_app(app)
