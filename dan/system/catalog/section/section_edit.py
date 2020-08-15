@@ -60,7 +60,7 @@ def section_edit(SITE):
 				<div class="flex_row p_5_20">
 					<div class="tc_item_l">Наименование</div>
 					<div class="tc_item_r flex_grow">
-						<input class="input" name="name" placeholder="Раздел 1" required value="''' + section['name'] + '''">
+						<input class="input input_long" name="name" placeholder="Раздел 1" required value="''' + section['name'] + '''">
 					</div>
 				</div>
 				<div class="flex_row p_5_20">

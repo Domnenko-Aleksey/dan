@@ -72,7 +72,7 @@ def item_edit(SITE):
 				<div class="flex_row p_5_20">
 					<div class="tc_item_l">Наименование</div>
 					<div class="tc_item_r flex_grow">
-						<input class="input" name="name" placeholder="Элемент" required value="''' + item['name'] + '''">
+						<input class="input input_long" name="name" placeholder="Элемент" required value="''' + item['name'] + '''">
 					</div>
 				</div>
 				<div class="flex_row p_5_20">

@@ -44,8 +44,13 @@ async def system_r(request):
     SITE.post = await request.post()  # Ждём получение файлов методом POST
     r = system.router(SITE)
 
+    # Обработка редиректа
     if r and 'redirect' in r:
         return web.HTTPFound(r['redirect'])
+    
+    # Обработка ajax
+    if r and 'ajax' in r:
+        return web.HTTPOk(text=r['ajax'])
 
     auth = 1
 

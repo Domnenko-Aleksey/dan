@@ -3,18 +3,20 @@ from classes.Char import Char
 import sys
 sys.path.append('system/catalog/char')
 
-def char_list(SITE):
+def char_name_list(SITE):
     print('FUNCTION -> system-> calalog -> char -> list')
 
-    SITE.addHeadFile('/templates/system/css/style.css')
+    SITE.addHeadFile('/templates/system/char/list.css')
+    SITE.addHeadFile('/templates/system/char/list.js')
+    SITE.addHeadFile('/lib/DRAG_N_DROP/DRAG_DROP.css')
+    SITE.addHeadFile('/lib/DRAG_N_DROP/DRAG_DROP.js')
+
     catalog_id = SITE.p[2]
 
     CATALOG = Catalog(SITE)
     CHAR = Char(SITE)
     catalog = CATALOG.getItem(catalog_id)
-    chars = CHAR.getCharName(catalog_id)
-
-    print(chars)
+    chars = CHAR.getNameList(catalog_id)
 
     char_type = {'string':'строка', 'number':'число', 'date':'дата', 'color':'цвет'}
 
@@ -22,16 +24,16 @@ def char_list(SITE):
     if (chars):
         i = 1
         for char in chars:
-            char_out +=  f'''<table class="drag_drop" data-id="{ char['id'] }">'
+            char_out +=  f'''<table class="drag_drop" data-id="{ char['id'] }">
 				<tr>
 					<td>{ char['id'] }</td>
 					<td>
-						<div class="flex_row contextmenu_wrap"><svg class="drag_drop_ico" title="Перетащить" data-id="{ char['id'] }" data-target-id="drag_target" data-class="drag_drop" data-f="ADMIN.chars.drag_drop"><use xlink:href="/administrator/template/sprite.svg#cursor24"></use></svg></div>
+						<div class="flex_row contextmenu_wrap"><svg class="drag_drop_ico" title="Перетащить" data-id="{ char['id'] }" data-target-id="drag_target" data-class="drag_drop" data-f="SYSTEM.chars.drag_drop"><use xlink:href="/templates/system/svg/sprite.svg#cursor24"></use></svg></div>
 					</td>
-					<td><a href="/admin/com/catalog/char/edit/{ char['id'] }">{ char['name'] } { char['unit'] }</a></td>
+					<td><a href="/system/catalog/char/edit/{ char['id'] }">{ char['name'] } ({ char['unit'] })</a></td>
 					<td>{ char_type[char['type']] }</td>
 					<td>
-						<svg class="catalog_char_delete" data-id="{ char['id'] }"><use xlink:href="/administrator/template/sprite.svg#delete"></use></svg>
+						<svg class="catalog_char_delete" data-id="{ char['id'] }"><use xlink:href="/templates/system/svg/sprite.svg#delete"></use></svg>
 					</td>
 				</tr>
 			</table>'''
@@ -56,13 +58,17 @@ def char_list(SITE):
                 <div class="ico_rectangle_text">Помощь</div>
             </a>
         </div>
-        <table class="admin_table even_odd">
-            <tr>
-                <th style="width:50px;">№</th>
-                <th style="width:50px;">&nbsp;</th>
-                <th>Наменование</th>
-            </tr>
-            { char_out }
-        </table>
+        <div id="drag_target" data-catalog_id="{ catalog['id'] }">
+            <table class="admin_table even_odd">
+                <tr>
+                    <th>Id</th>
+                    <th>&nbsp;</th>
+                    <th>Наменование</th>
+                    <th>Тип</th>
+                    <th></th>
+                </tr>
+                { char_out }
+            </table>
+        </div>
     </div>
     '''

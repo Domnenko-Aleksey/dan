@@ -32,7 +32,7 @@ def cat_edit(SITE):
 				<div class="flex_row p_5_20">
 					<div class="tc_item_l">Наименование</div>
 					<div class="tc_item_r flex_grow">
-						<input class="input" name="name" placeholder="Интернет магазин" required value="''' + catalog['name'] + '''">
+						<input class="input input_long" name="name" placeholder="Интернет магазин" required value="''' + catalog['name'] + '''">
 					</div>
 				</div>
 				<div class="flex_row p_5_20">
