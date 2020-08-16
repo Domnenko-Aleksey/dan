@@ -1,7 +1,7 @@
 from aiohttp import web
 import sys
 sys.path.append('index/graph/graph_1')
-sys.path.append('index/graph/graph_1')
+# sys.path.append('index/graph/graph_2')
 from graph_1 import graph_1
 # from graph_2 import graph_2
 

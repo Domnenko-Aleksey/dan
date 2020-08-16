@@ -1,9 +1,11 @@
 from aiohttp import web
 import sys
-sys.path.append('system')
+sys.path.append('system/mainpage')
 sys.path.append('system/catalog')
-from catalog import catalog
-from mainpage import mainpage
+sys.path.append('system/bot')
+from system.mainpage import mainpage
+from system.catalog import catalog
+from system.bot import bot
 
 def router(SITE):
     print('SYSTEM - router')
@@ -11,15 +13,16 @@ def router(SITE):
 
     if (auth != 1):
         # Если нет авторизации
-        if (SITE.request.method == 'POST' and SITE == 'login'):
-            print ('Проверка логина / пароля')
-        else:
-            print ('Редирект на страницу SYSTEM')
+        # if (SITE.request.method == 'POST' and SITE == 'login'):
+            # print ('Проверка логина / пароля')
+        # else:
+            # print ('Редирект на страницу SYSTEM')
 
         # Вызов функций по ключу
         functions = {
-            '': mainpage,
-            'catalog': catalog
+            '': mainpage.mainpage,
+            'catalog': catalog.catalog,
+            'bot': bot.bot,
             # 'users': users,
             # 'help': help
         }

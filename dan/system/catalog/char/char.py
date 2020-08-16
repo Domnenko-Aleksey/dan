@@ -3,28 +3,28 @@ import re
 import sys
 
 sys.path.append('system/catalog/char')
-from char_name_list import char_name_list
-from char_name_edit import char_name_edit
-from char_name_insert import char_name_insert
-from char_name_update import char_name_update
-from char_name_ordering import char_name_ordering
-from char_name_delete import char_name_delete
+from system.catalog.char.name_list import name_list
+from system.catalog.char.edit import edit
+from system.catalog.char.insert import insert
+from system.catalog.char.update import update
+from system.catalog.char.ordering import ordering
+from system.catalog.char.delete import delete
 
 
 def char(SITE):
     print('PATH -> system/catalog/char')
 
     if SITE.p[2].isdigit() > 0:
-        return char_name_list(SITE)
+        return name_list(SITE)
 
     # Вызов функций по ключу
     functions = {
-        'add': char_name_edit,
-        'edit': char_name_edit,
-        'insert': char_name_insert,
-        'update': char_name_update,
-        'ordering': char_name_ordering,
-        'delete': char_name_delete,
+        'add': edit,
+        'edit': edit,
+        'insert': insert,
+        'update': update,
+        'ordering': ordering,
+        'delete': delete,
     }
 
     if SITE.p[2] in functions:

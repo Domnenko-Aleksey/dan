@@ -2,13 +2,13 @@ from aiohttp import web
 import re
 import sys
 sys.path.append('system/catalog/section')
-from section_edit import section_edit
-from section_insert import section_insert
-from section_update import section_update
-from section_ordering import section_ordering
-from section_pub import section_pub
-from section_delete import section_delete
-from section_list import section_list
+from system.catalog.section.edit import edit
+from system.catalog.section.insert import insert
+from system.catalog.section.update import update
+from system.catalog.section.ordering import ordering
+from system.catalog.section.pub import pub
+from system.catalog.section.delete import delete
+from system.catalog.section.section_list import section_list
 
 
 def section(SITE):
@@ -16,22 +16,22 @@ def section(SITE):
 
     # Вызов функций по ключу
     functions = {
-        'add': section_edit,
-        'edit': section_edit,
-        'insert': section_insert,
-        'update': section_update,
-        'up': section_ordering,
-        'down': section_ordering,
-        'pub': section_pub,
-        'unpub': section_pub,
-        'delete': section_delete,
+        'add': edit,
+        'edit': edit,
+        'insert': insert,
+        'update': update,
+        'up': ordering,
+        'down': ordering,
+        'pub': pub,
+        'unpub': pub,
+        'delete': delete,
     }
 
     if (SITE.p[2] in functions):
         return functions[SITE.p[2]](SITE)
     
     if re.search('^\d+$', SITE.p[2]):
-            return section_list(SITE)
+        return section_list(SITE)
 
     # Если функция не существует и это не номер раздела - 404
     raise web.HTTPNotFound()

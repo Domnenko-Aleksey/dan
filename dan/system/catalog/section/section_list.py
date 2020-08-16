@@ -1,7 +1,7 @@
-from classes.Catalog import Catalog
-from classes.Section import Section
 import sys
 sys.path.append('system/catalog/classes')
+from Catalog import Catalog
+from system.catalog.classes.Section import Section
 
 def section_list(SITE):
     print('FUNCTION -> system-> calalog -> section -> list')

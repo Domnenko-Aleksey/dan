@@ -5,20 +5,18 @@ import pymysql
 import pymysql.cursors
 import sys
 sys.path.append('classes')
-from classes.Site import Site
-sys.path.append('index')
-import index
 sys.path.append('system')
-import system
-sys.path.append('graph')
-import graph
+sys.path.append('index')
+from Site import Site
+from index import index
+from system import system
 
 
 @aiohttp_jinja2.template('index/index.html')
 async def index_r(request):
     # Основной режим вывода содержимого
     SITE = site(request)
-    print('************************************')
+    print('******* INDEX *****************************')
 
     SITE.post = await request.post()  # Ждём получение файлов методом POST
     r = index.router(SITE)
@@ -40,6 +38,7 @@ async def ws(request):
 async def system_r(request):
     # Админка
     SITE = site(request)
+    print('******* SYSTEM *****************************')
 
     SITE.post = await request.post()  # Ждём получение файлов методом POST
     r = system.router(SITE)
@@ -87,6 +86,7 @@ def site(request):
     SITE.request = request
 
     return SITE
+
 
 
 

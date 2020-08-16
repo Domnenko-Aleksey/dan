@@ -9,13 +9,13 @@ class Section:
         self.db.execute(sql, id)
         return self.db.fetchone()
 
-    def getSectionsByCatalogId(self, catalog_id, parent_id = False):
-        if parent_id:
+    def getSectionsByCatalogId(self, data):
+        if data['parent_id']:
             sql = "SELECT `id`, `parent_id`, `name`, `text`, `data`, `status` FROM sections WHERE catalog_id = %s AND parent_id = %s ORDER BY ordering"
-            self.db.execute(sql, catalog_id, parent_id)
+            self.db.execute(sql, (data['catalog_id'], data['parent_id']))
         else:
             sql = "SELECT `id`, `parent_id`, `name`, `text`, `data`, `status` FROM sections WHERE catalog_id = %s ORDER BY ordering"
-            self.db.execute(sql, catalog_id)
+            self.db.execute(sql, data['catalog_id'])
         rows = self.db.fetchall()
         return rows if len(rows) > 0 else False
 
@@ -49,41 +49,42 @@ class Section:
             data['id']
         ))
 
-    def ordering(self, type, id):
+    def ordering(self, data):
         # АЛГОРИТМ РАБОТЫ
-        # 1. Находим id каталога по id раздела
-        # 2. Создаём список list_id c id и находим порядковый индекс нашего элемента - n
-        # 3. Если тип UP - ставим - меняем местами с предыдущим id
-        # 4. Если тип DOWN - меняем местами с последующим id
-        # Записываем id в БД
+        # 1. Находим data['id'] каталога по data['id'] раздела
+        # 2. Создаём список list_id c data['id'] и находим порядковый индекс нашего элемента - n
+        # 3. Если тип UP - ставим - меняем местами с предыдущим data['id']
+        # 4. Если тип DOWN - меняем местами с последующим data['id']
+        # Записываем data['id'] в БД
 
         # 1. Находим id каталога по id раздела
-        section = self.getSection(id)
+        section = self.getSection(data['id'])
 
         # Получаем список id каталогов
-        rows = self.getSectionsByCatalogId(section['catalog_id'], section['parent_id'])
+        d = {'catalog_id': section['catalog_id'], 'parent_id': section['parent_id']}
+        rows = self.getSectionsByCatalogId(d)
         list_id = []
         i = n = 0
 
         # 2. Создаём новый список list_1
         for row in rows:
             list_id.append(row['id'])
-            if (int(row['id']) == int(id)):
+            if (int(row['id']) == int(data['id'])):
                 n = i
             i += 1
 
         # 3. Если тип UP
-        if type == 'up':
+        if data['type'] == 'up':
             if (n) > 0:
                 prev = list_id[n-1]
-                list_id[n-1] = int(id)
+                list_id[n-1] = int(data['id'])
                 list_id[n] = prev
 
         # 4. Если тип DOWN
-        if type == 'down':
+        if data['type'] == 'down':
             if (n < len(list_id) - 1):
                 next = list_id[n+1]
-                list_id[n+1] = int(id)
+                list_id[n+1] = int(data['id'])
                 list_id[n] = next
 
         for ordering in range(len(list_id)):
@@ -133,7 +134,8 @@ class Section:
 
 
     def tree(self, catalog_id):
-        rows = self.getSectionsByCatalogId(catalog_id)
+        data = {'catalog_id': catalog_id, 'parent_id': False}
+        rows = self.getSectionsByCatalogId(data)
         if rows:
             self._tree_recursion(rows)
         return self._tree_result
@@ -155,7 +157,7 @@ class Section:
 
 
     def breadcrumbsPath(self, data):
-        r = self.getSectionsByCatalogId(data['catalog_id'])
+        r = self.getSectionsByCatalogId(data)
         self._breadcrumbs_recursion(parent_id = data['parent_id'], rows = r)
         return self._breadcrumbs_path
 

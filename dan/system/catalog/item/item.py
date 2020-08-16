@@ -1,28 +1,27 @@
 from aiohttp import web
-import re
 import sys
 sys.path.append('system/catalog/item')
-from item_edit import item_edit
-from item_insert import item_insert
-from item_update import item_update
-from item_ordering import item_ordering
-from item_pub import item_pub
-from item_delete import item_delete
+from system.catalog.item.edit import edit
+from system.catalog.item.insert import insert
+from system.catalog.item.update import update
+from system.catalog.item.ordering import ordering
+from system.catalog.item.pub import pub
+from system.catalog.item.delete import delete
 
 
 def item(SITE):
     print('PATH -> system/catalog/item')
     # Вызов функций по ключу
     functions = {
-        'add': item_edit,
-        'edit': item_edit,
-        'insert': item_insert,
-        'update': item_update,
-        'up': item_ordering,
-        'down': item_ordering,
-        'pub': item_pub,
-        'unpub': item_pub,
-        'delete': item_delete,
+        'add': edit,
+        'edit': edit,
+        'insert': insert,
+        'update': update,
+        'up': ordering,
+        'down': ordering,
+        'pub': pub,
+        'unpub': pub,
+        'delete': delete,
     }
 
     if (SITE.p[2] in functions):

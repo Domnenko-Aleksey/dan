@@ -1,5 +1,4 @@
 from aiohttp import web
-import re
 import sys
 sys.path.append('system/catalog/settings')
 # from item_edit import item_edit

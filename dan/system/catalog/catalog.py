@@ -5,11 +5,11 @@ sys.path.append('system/catalog/section')
 sys.path.append('system/catalog/item')
 sys.path.append('system/catalog/char')
 sys.path.append('system/catalog/settings')
-from cat import cat
-from section import section
-from item import item
-from char import char
-from settings import settings
+from system.catalog.cat import cat
+from system.catalog.section import section
+from system.catalog.item import item
+from system.catalog.char import char
+from system.catalog.settings import settings
 
 
 
@@ -17,12 +17,12 @@ def catalog(SITE):
     print('PATH -> system/catalog')
     # Вызов функций по ключу
     functions = {
-        '': cat,  # Управление каталогами
-        'cat': cat,
-        'section': section,
-        'item': item,
-        'char': char,
-        'settings': settings
+        '': cat.cat,  # Управление каталогами
+        'cat': cat.cat,
+        'section': section.section,
+        'item': item.item,
+        'char': char.char,
+        'settings': settings.settings
     }
 
     if (SITE.p[1] not in functions):

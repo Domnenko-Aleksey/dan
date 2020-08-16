@@ -21,18 +21,15 @@ SYSTEM.section = {
 				return
 			}
 			else{
-				let req = new XMLHttpRequest()
 				let form = new FormData()
 				form.append('id', id)
-				form.append('agree', 'yes')
-				req.open('post', '/system/catalog/section/delete', true);
-				req.send(form)
-				req.onreadystatechange = ()=>{
-					if(req.readyState == 4 && req.status == 200){
-                        console.log(req)
-						document.location.href = '/system/catalog/cat'
+				form.append('agree', 'yes')				
+				DAN.ajax('/system/catalog/section/delete', form, function(data){
+					if (data.answer == 'success'){
+						console.log('Раздел удалён', data)
+						document.location.href = '/system/catalog/cat/' + data.cat_id
 					}
-				}
+				})				
 			}
 		}
     }

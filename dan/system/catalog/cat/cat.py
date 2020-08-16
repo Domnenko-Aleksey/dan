@@ -1,40 +1,41 @@
 from aiohttp import web
-import re
 import sys
 sys.path.append('system/catalog/cat')
-from cat_edit import cat_edit
-from cat_insert import cat_insert
-from cat_list import cat_list
-from cat_update import cat_update
-from cat_ordering import cat_ordering
-from cat_delete import cat_delete
-from cat_settings_edit import cat_settings_edit
-from cat_settings_update import cat_settings_update
-from cat_sec_list import cat_sec_list
+from system.catalog.cat.edit import edit
+from system.catalog.cat.insert import insert
+from system.catalog.cat.cat_list import cat_list
+from system.catalog.cat.update import update
+from system.catalog.cat.ordering import ordering
+from system.catalog.cat.delete import delete
+from system.catalog.cat.settings_edit import settings_edit
+from system.catalog.cat.settings_update import settings_update
+from system.catalog.cat.sec_list import sec_list
+
+print('sys.path',sys.path)
 
 
 def cat(SITE):
     print('PATH -> system/catalog/cat')
 
+    if SITE.p[2].isdigit():
+        return sec_list(SITE)
+
     # Вызов функций по ключу
     functions = {
         '': cat_list,
-        'edit': cat_edit,
-        'add': cat_edit,
-        'insert': cat_insert,
-        'update': cat_update,
-        'up': cat_ordering,
-        'down': cat_ordering,
-        'delete': cat_delete,
-        'settings_edit': cat_settings_edit,
-        'settings_update': cat_settings_update,
+        'edit': edit,
+        'add': edit,
+        'insert': insert,
+        'update': update,
+        'up': ordering,
+        'down': ordering,
+        'delete': delete,
+        'settings_edit': settings_edit,
+        'settings_update': settings_update,
     }
 
     if (SITE.p[2] in functions):
         return functions[SITE.p[2]](SITE)
-
-    if re.search('^\d+$', SITE.p[2]):
-        return cat_sec_list(SITE)
 
     # Если функция не существует и это не номер раздела - 404
     raise web.HTTPNotFound()
