@@ -1,30 +1,25 @@
-def keyword(SITE):
-    print('FUNCTION -> system/bot/keyword')
+from aiohttp import web
+import sys
+from system.bot.keyword.keyword_list import keyword_list
+from system.bot.keyword.edit import edit
 
-    SITE.content += f'''<div class="bg_gray">
-        <h1>BOT -> KEYWORD</h1>
-        <div class="breadcrumbs">
-            <span><svg class="home"><use xlink:href="/templates/system/svg/sprite.svg#home"></use></svg></span> 
-        </div>
-        <div class="flex_row_start">
-            <a href="/system/catalog/cat/add" target="blank" class="ico_rectangle_container">
-                <svg><use xlink:href="/templates/system/svg/sprite.svg#folder_add"></use></svg>
-                <div class="ico_rectangle_text">Добавить каталог</div>
-            </a>
-            <a href="/system/catalod/help" target="blank" class="ico_rectangle_container">
-                <svg><use xlink:href="/templates/system/svg/sprite.svg#help"></use></svg>
-                <div class="ico_rectangle_text">Помощь</div>
-            </a>
-        </div>
-        <div class="flex_row_start">
-            <a href="/system/catalog/cat" class="ico_square_container">
-                <div><svg><use xlink:href="/templates/system/svg/sprite.svg#folder_add"></use></svg></div>
-                <div class="ico_square_text">Каталог</div>
-            </a>
-            <a href="/system/bot" class="ico_square_container">
-                <div><svg><use xlink:href="/templates/system/svg/sprite.svg#bot"></use></svg></div>
-                <div class="ico_square_text">Бот</div>
-            </a>
-        </div>
-    </div>
-    '''
+
+def keyword(SITE):
+    print('PATH -> system/bot/keyword')
+
+    if SITE.p[2].isdigit():
+        return keyword_list(SITE)
+
+    functions = {
+        'add': edit,
+        'edit': edit,
+        #'delete': delete,
+        #'insert': insert,
+        #'update': update,
+    }
+
+    if (SITE.p[2] not in functions):
+        # raise web.HTTPNotFound()
+        return keyword_list(SITE)
+
+    return functions[SITE.p[2]](SITE)

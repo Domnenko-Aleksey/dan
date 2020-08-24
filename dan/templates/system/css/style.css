@@ -23,6 +23,7 @@ header {
     align-items: center;
     align-content: center;
 	position: sticky;
+	z-index: 1;
 	top: 0px;
 	height: 80px;
 	padding: 0 5px;
@@ -311,6 +312,35 @@ a.admin_table_tr_unpub, .admin_table_tr_unpub a, .admin_table_tr_unpub {
 
 .admin_table a:hover{
     text-decoration: underline;
+}
+
+
+.dan_accordion_head {
+    font-size: 12px !important;
+    border: 1px solid;
+    border-color: #e2e5e7 #8f989d #969b9d #eff0f0;
+    font-family: sans-serif, arial;
+    font-weight: bold;
+    text-shadow: 0 1px rgba(255, 255, 255, 0.7);
+    background-image: linear-gradient(to bottom, #c2cbcf, #b2babb);
+    background-color: #c2cbcf !important;
+    cursor: pointer;
+}
+
+.dan_accordion_head svg {
+    width: 25px;
+    height: 25px;
+    margin: 0 10px;
+}
+
+.dan_accordion_content {
+    border: none !important;
+}
+
+.lineheight30 {
+    display: flex;
+    align-items: center;
+    height: 30px;
 }
 
 

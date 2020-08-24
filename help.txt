@@ -1,5 +1,12 @@
+МОДУЛИ
+	Узнать версии установленных модулей
+	pip freeze
+	Удалить 
+	pip uninstall модуль
+
+
 УСТАНОВКА VENV
-	Переходим в нашу папку 
+	Переходим в нашу папку
 	cd /github/dan
 	Устанавливаем виртуальное окружение
 	python -m venv env
@@ -25,7 +32,7 @@
 	На Windows ставим XAMPP, на Linux LAMP
 	Запускаем PhpMyadmin
 	Создаем базу данных 'dan_py'
-	Создаём пользователя - открываем Бд 'mysql' -> таблица 'user' -> Добавить учетную запись пользователя -> 
+	Создаём пользователя - открываем Бд 'mysql' -> таблица 'user' -> Добавить учетную запись пользователя ->
 		пользователь -> root
 		пароль -> ''
 		типы привелегий - ставим галочки 'данные' и 'структура'
@@ -34,14 +41,30 @@
 	Выполняем запрос, который находится в файле create_table.sql
 
 
+УСТАНОВКА IMAGEAI
+	pip install tensorflow
+	pip install opencv-python
+	pip install keras
+	pip install numpy
+	pip install imageai --upgrade
+
+	Скачать модель SqueezeNet
+
+	Скачать модель ResNet
+
+	Скачать модель InceptionV3
+
+	Скачать модель DenseNet
+
+
 ЗАПУСК ENV
 	/github/dan/env/Scripts/activate.bat  # Windows
 	/github/dan/env/bin/activate  # Linux
 	cd /github/dan/dan
 
-	
+
 ЗАПУСК WEB ПРИЛОЖЕНИЯ
-	Переходим в папку приложения 
+	Переходим в папку приложения
 	cd /github/dan/dan
 	Запускаем виртуальное окружение
 	/github/dan/env/Scripts/activate.bat

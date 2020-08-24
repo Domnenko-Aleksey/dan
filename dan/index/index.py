@@ -2,8 +2,10 @@ from aiohttp import web
 import sys
 sys.path.append('index/mainpage')
 sys.path.append('index/graph')
+sys.path.append('index/aiimage')
 from index.mainpage import mainpage
 from index.graph import graph
+# from index.aiimage import aiimage
 
 
 def router(SITE):
@@ -12,7 +14,8 @@ def router(SITE):
     # Вызов функций по ключу
     functions = {
         '': mainpage.mainpage,
-        'graph': graph.graph
+        'graph': graph.graph,
+        # 'aiimage': aiimage.aiimage
         # 'users': users,
         # 'help': help
     }

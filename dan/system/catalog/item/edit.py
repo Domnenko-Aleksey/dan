@@ -1,20 +1,23 @@
+from system.catalog.classes.Char import Char
+from system.catalog.classes.Item import Item
+from system.catalog.classes.Section import Section
+from system.catalog.classes.Catalog import Catalog
 import sys
 sys.path.append('system/catalog/classes')
-from Catalog import Catalog
-from Section import Section
-from system.catalog.classes.Item import Item
 
 
 def edit(SITE):
     print('PATH -> system/catalog/item/edit')
     SITE.addHeadFile('/plugins/ckeditor/ckeditor.js')
+    SITE.addHeadFile('/templates/system/catalog/item/edit.css')
 
     CATALOG = Catalog(SITE)
     SECTION = Section(SITE)
-    ITEM = Item(SITE)
+    CHAR = Char(SITE)
 
     if SITE.p[2] == 'edit':
         item_id = SITE.p[3]
+        ITEM = Item(SITE)
         item = ITEM.getItem(item_id)
         section_id = item['section_id']
         title = 'Редактировать элемент'
@@ -24,10 +27,12 @@ def edit(SITE):
         title = 'Добавить  элемент'
         action = 'insert'
         ordering = ITEM.getMaxOrdering(section_id) + 1
-        item = {'id': 0, 'name': '', 'text': '', 'data': '', 'status': 1, 'ordering': ordering}
+        item = {'id': 0, 'name': '', 'text': '',
+                'data': '', 'status': 1, 'ordering': ordering}
 
     section = SECTION.getSection(section_id)
     catalog = CATALOG.getItem(section['catalog_id'])
+    chars = CHAR.getValuesByItemId(item['id'])
 
     data = {}
     data['catalog_id'] = catalog['id']
@@ -41,6 +46,38 @@ def edit(SITE):
             breadcrumbs += '<svg><use xlink:href="/templates/system/svg/sprite.svg#arrow_right_1"></use></svg>'
             breadcrumbs += '<a href="/system/catalog/section/' + \
                 str(i['id']) + '">' + i['name'] + '</a>'
+
+    # Обработка характеристик
+    chars_out = ''
+    if chars:
+        for chars in char:
+            if char['type'] == 'number':
+                type_out = '<td class="char_tab_type">число</td>'
+                type_out += '<td class="char_tab_value"><input draggable="false" class="input char_input_number" type="text" name="char_value[]" value="' + char['value'] + '"> < /td >'
+
+            if char['type'] == 'string':
+                type_out = '<td class="char_tab_type">строка</td>'
+                type_out += '<td class="char_tab_value"><input draggable="false" class="input char_input_string" type="text" name="char_value[]" value="' + char['value'] + '"></td>'
+
+            chars_out += '<table class="char_tab" data-id="' + char['id'] + '">'
+            chars_out +=    '<tr>'
+            chars_out +=        '<td class="char_tab_ico_dnd">'
+            chars_out +=            '<div class="flex_row contextmenu_wrap">'
+            chars_out +=            '<svg class="drag_drop_ico" title="Перетащить" data-id="' + char['name_id'] + '" data-target-id="char_list" data-class="char_tab" data-direction="y" data-f="ADMIN.catalog.item.ordering">'
+            chars_out +=            '<use xlink:href="/administrator/template/sprite.svg#cursor24"></use></svg>'
+            chars_out +=            '</div>'
+            chars_out +=        '</td>'
+            chars_out +=        '<td class="char_tab_name">'
+            chars_out +=            char['name'] + ' (' + char['unit'] + ')'
+            chars_out +=            '<input type="hidden" name="char_id[]" value="' + char['id'] + '">'
+            chars_out +=            '<input type="hidden" name="char_name_id[]" value="' + char['name_id'] + '">'
+            chars_out +=        '</td>'
+            chars_out +=        type_out
+            chars_out +=        '<td class="char_tab_delete">'
+            chars_out +=            '<svg class="catalog_char_delete" data-id="' + char['id'] + '"><use xlink:href="/administrator/template/sprite.svg#delete"></use></svg>'
+            chars_out +=        '</td>'
+            chars_out +=    '</tr>'
+            chars_out += '</table>'
 
     rows = SECTION.tree(catalog['id'])
     sec_options = ''
@@ -92,7 +129,7 @@ def edit(SITE):
 				</div>
                 <div class="flex_row p_5_20">
       				<div class="tc_item_l">Данные</div>
-					<div class="tc_item_r flex_grow">          
+					<div class="tc_item_r flex_grow">
 					    <textarea class="input" name="data" style="width:100%;height:100px;">''' + item['data'] + '''</textarea>
                     </div>
 				</div>
@@ -108,6 +145,22 @@ def edit(SITE):
 						<input class="input" name="ordering" type="number" value="''' + str(item['ordering']) + '''">
 					</div>
 				</div>
+                <div class="flex_row accordion_container">
+                    <div class="dan_accordion_container">
+                        <input class="dan_accordion_checkbox" type="checkbox">
+                        <div class="dan_accordion_head">
+                            <div class="dan_accordion_head_indicator"></div>
+                            <div class="dan_accordion_head_title">ХАРАКТЕРИСТИКИ</div>
+                        </div>
+                        <div class="dan_accordion_content">
+                            <div class="char_button_wrap">
+                                <a href="/admin/com/catalog/char/''' + str(catalog['id']) + '''" target="blank" class="char_name_add_button" title="Добавить характеристику">+</a>
+                                <div id="char_value_add" class="char_value_add_button" data-catalog_id="''' + str(catalog['id']) + '''">Добавить значение</div>
+                            </div>
+                            <div id="char_list" data-id="''' + str(item['id']) + '''">''' + chars_out + '''</div>
+                        </div>
+                    </div>
+                </div>
 				<div class="flex_row p_5_20">
 					<div class="tc_item_l"><input class="button_green" type="submit" name="submit" value="Сохранить"></div>
 					<div class="tc_item_r flex_grow"><input class="button_white" type="submit" name="cancel" value="Отменить"></div>
