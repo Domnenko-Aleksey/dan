@@ -29,5 +29,4 @@ class Site:
                 out += '<script src="' + file + '"></script>'
             if file_list[-1] == 'css':
                 out += '<link rel="stylesheet" href="' + file + '" />'
-        print(out)
         return out
