@@ -15,11 +15,16 @@ def aiimage_1(SITE):
     prediction = ImagePrediction()
 
     # Устанавливает тип модели созданного вами экземпляра распознавания изображений для модели SqueezeNet
-    prediction.setModelTypeAsSqueezeNet()
+    # prediction.setModelTypeAsSqueezeNet()
+    # prediction.setModelTypeAsResNet()
+    prediction.setModelTypeAsInceptionV3()
+    # prediction.setModelTypeAsDenseNet()
 
     # Путь к файлу модели, который вы загрузили, и должна соответствовать типу модели, который вы установили для своего экземпляра. 
     # prediction.setModelPath('index/aiimage/models/squeezenet_weights_tf_dim_ordering_tf_kernels.h5')
-    prediction.setModelPath('index/aiimage/models/squeezenet_weights_tf_dim_ordering_tf_kernels.h5')
+    prediction.setModelPath('index/aiimage/models/inception_v3_weights_tf_dim_ordering_tf_kernels.h5')
+    # prediction.setModelPath('index/aiimage/models/resnet50_weights_tf_dim_ordering_tf_kernels.h5')
+
 
     # Загружает модель из пути, указанного в вызове функции выше, в экземпляр прогнозирования изображения.
     # parameter prediction_speed (optional): (необязательно): этот параметр позволяет сократить время, необходимое для прогнозирования изображения, до 80%, что приводит к небольшому снижению точности. Этот параметр принимает строковые значения. Доступные значения:  “normal”, “fast”, “faster” and “fastest”. The default values is “normal”
@@ -31,7 +36,7 @@ def aiimage_1(SITE):
     # содержащий все возможные результаты предсказания. Результаты расположены в порядке убывания процентной вероятности.
     # Возвращает prediction_probabilities (список Python): второе значение, возвращаемое функцией predictionImage, представляет собой список, 
     # который содержит соответствующую процентную вероятность всех возможных прогнозов в prediction_results .
-    prediction_results, prediction_probabilities = prediction.predictImage("index/aiimage/images/2.jpg", result_count=10)
+    prediction_results, prediction_probabilities = prediction.predictImage("index/aiimage/images/4.jpg", result_count=10)
 
     print('---prediction_results---', prediction_results)
     print('---prediction_probabilities---', prediction_probabilities)

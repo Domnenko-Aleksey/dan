@@ -1,6 +1,7 @@
 import sys
 sys.path.append('system/catalog/classes')
 from system.catalog.classes.Item import Item
+from system.catalog.classes.Char import Char
 
 
 def insert(SITE):
@@ -10,6 +11,7 @@ def insert(SITE):
         return {'redirect': '/system/catalog/section/' + SITE.post['section_id']}
 
     ITEM = Item(SITE)
+    CHAR = Char(SITE)
     ITEM.insert({
         'section_id': SITE.post['section_id'],
         'name': SITE.post['name'],

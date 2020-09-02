@@ -9,7 +9,10 @@ sys.path.append('system/catalog/classes')
 def edit(SITE):
     print('PATH -> system/catalog/item/edit')
     SITE.addHeadFile('/plugins/ckeditor/ckeditor.js')
+    SITE.addHeadFile('/lib/DRAG_N_DROP/DRAG_DROP.css')
+    SITE.addHeadFile('/lib/DRAG_N_DROP/DRAG_DROP.js')
     SITE.addHeadFile('/templates/system/catalog/item/edit.css')
+    SITE.addHeadFile('/templates/system/catalog/item/edit.js')
 
     CATALOG = Catalog(SITE)
     SECTION = Section(SITE)
@@ -44,37 +47,36 @@ def edit(SITE):
     if (len(breadcrubmps_list) > 0):
         for i in breadcrubmps_list:
             breadcrumbs += '<svg><use xlink:href="/templates/system/svg/sprite.svg#arrow_right_1"></use></svg>'
-            breadcrumbs += '<a href="/system/catalog/section/' + \
-                str(i['id']) + '">' + i['name'] + '</a>'
+            breadcrumbs += '<a href="/system/catalog/section/' + str(i['id']) + '">' + i['name'] + '</a>'
 
     # Обработка характеристик
     chars_out = ''
     if chars:
-        for chars in char:
+        for char in chars:
             if char['type'] == 'number':
                 type_out = '<td class="char_tab_type">число</td>'
-                type_out += '<td class="char_tab_value"><input draggable="false" class="input char_input_number" type="text" name="char_value[]" value="' + char['value'] + '"> < /td >'
+                type_out += '<td class="char_tab_value"><input draggable="false" class="input char_input_number" type="text" name="char_value[]" value="' + char['value'] + '"></td>'
 
             if char['type'] == 'string':
                 type_out = '<td class="char_tab_type">строка</td>'
                 type_out += '<td class="char_tab_value"><input draggable="false" class="input char_input_string" type="text" name="char_value[]" value="' + char['value'] + '"></td>'
 
-            chars_out += '<table class="char_tab" data-id="' + char['id'] + '">'
+            chars_out += '<table class="char_tab" data-id="' + str(char['id']) + '">'
             chars_out +=    '<tr>'
             chars_out +=        '<td class="char_tab_ico_dnd">'
             chars_out +=            '<div class="flex_row contextmenu_wrap">'
-            chars_out +=            '<svg class="drag_drop_ico" title="Перетащить" data-id="' + char['name_id'] + '" data-target-id="char_list" data-class="char_tab" data-direction="y" data-f="ADMIN.catalog.item.ordering">'
-            chars_out +=            '<use xlink:href="/administrator/template/sprite.svg#cursor24"></use></svg>'
+            chars_out +=                '<svg class="drag_drop_ico" title="Перетащить" data-id="' + str(char['name_id']) + '" data-target-id="char_list" data-class="char_tab" data-direction="y" data-f="SYSTEM.catalog.item.char_ordering">'
+            chars_out +=                '<use xlink:href="/templates/system/svg/sprite.svg#cursor24"></use></svg>'
             chars_out +=            '</div>'
             chars_out +=        '</td>'
             chars_out +=        '<td class="char_tab_name">'
             chars_out +=            char['name'] + ' (' + char['unit'] + ')'
-            chars_out +=            '<input type="hidden" name="char_id[]" value="' + char['id'] + '">'
-            chars_out +=            '<input type="hidden" name="char_name_id[]" value="' + char['name_id'] + '">'
+            chars_out +=            '<input type="hidden" name="char_id[]" value="' + str(char['id']) + '">'
+            chars_out +=            '<input type="hidden" name="char_name_id[]" value="' + str(char['name_id']) + '">'
             chars_out +=        '</td>'
             chars_out +=        type_out
             chars_out +=        '<td class="char_tab_delete">'
-            chars_out +=            '<svg class="catalog_char_delete" data-id="' + char['id'] + '"><use xlink:href="/administrator/template/sprite.svg#delete"></use></svg>'
+            chars_out +=            '<svg class="catalog_char_delete" data-id="' + str(char['id']) + '"><use xlink:href="/templates/system/svg/sprite.svg#delete"></use></svg>'
             chars_out +=        '</td>'
             chars_out +=    '</tr>'
             chars_out += '</table>'
@@ -154,7 +156,7 @@ def edit(SITE):
                         </div>
                         <div class="dan_accordion_content">
                             <div class="char_button_wrap">
-                                <a href="/admin/com/catalog/char/''' + str(catalog['id']) + '''" target="blank" class="char_name_add_button" title="Добавить характеристику">+</a>
+                                <a href="/system/catalog/char/add/''' + str(catalog['id']) + '''" target="blank" class="char_name_add_button" title="Добавить характеристику">+</a>
                                 <div id="char_value_add" class="char_value_add_button" data-catalog_id="''' + str(catalog['id']) + '''">Добавить значение</div>
                             </div>
                             <div id="char_list" data-id="''' + str(item['id']) + '''">''' + chars_out + '''</div>

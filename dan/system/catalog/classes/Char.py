@@ -67,13 +67,15 @@ class Char:
         return self.db.fetchone()
 
     def getValuesByItemId(self, item_id):
-        sql = "SELECT v.id, v.item_id, v.name_id, v.value, n.name, n.unit, n.type, n.settings FROM com_catalog_char_value v "
+        sql = "SELECT v.id, v.item_id, v.name_id, v.value, n.name, n.unit, n.type, n.settings "
+        sql += "FROM com_catalog_char_value v "
         sql += "JOIN com_catalog_char_name n "
         sql += "ON n.id = v.name_id "
         sql += "WHERE item_id = %s "
         sql += "ORDER BY v.ordering"
         self.db.execute(sql, item_id)
         rows = self.db.fetchall()
+        print('------------------', rows)
         return rows if rows is not None else False
 
     def deleteValue(self, id):
@@ -82,9 +84,9 @@ class Char:
 
     def insertValue(self, data):
         sql = "INSERT INTO com_catalog_char_value SET "
-        sql += "item_id = %s "
-        sql += "name_id = %s "
-        sql += "value = %s "
+        sql += "item_id = %s, "
+        sql += "name_id = %s, "
+        sql += "value = %s, "
         sql += "ordering = %s"
 
         return self.db.execute(sql, (
@@ -95,10 +97,14 @@ class Char:
         ))
 
     def updateValue(self, data):
+        char = self.getValue(data['id'])
+        if char['value'] == data['value'] and char['ordering'] == data['ordering']:
+            return
+
         sql = "UPDATE com_catalog_char_value SET "
-        sql += "item_id = %s "
-        sql += "name_id = %s "
-        sql += "value = %s "
+        sql += "item_id = %s, "
+        sql += "name_id = %s, "
+        sql += "value = %s, "
         sql += "ordering = %s "
         sql += "WHERE id = %s"
 

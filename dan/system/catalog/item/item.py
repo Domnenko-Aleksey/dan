@@ -2,6 +2,8 @@ from aiohttp import web
 import sys
 sys.path.append('system/catalog/item')
 from system.catalog.item.edit import edit
+from system.catalog.item.char_list_add_ajax import char_list_add_ajax
+from system.catalog.item.char_delete_ajax import char_delete_ajax
 from system.catalog.item.insert import insert
 from system.catalog.item.update import update
 from system.catalog.item.ordering import ordering
@@ -14,6 +16,8 @@ def item(SITE):
     # Вызов функций по ключу
     functions = {
         'add': edit,
+        'char_list_add_ajax': char_list_add_ajax,
+        'char_delete_ajax': char_delete_ajax,
         'edit': edit,
         'insert': insert,
         'update': update,
