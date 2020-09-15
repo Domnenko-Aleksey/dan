@@ -2,10 +2,10 @@ from aiohttp import web
 import sys
 sys.path.append('index/mainpage')
 sys.path.append('index/graph')
-sys.path.append('index/aiimage')
+sys.path.append('index/image_predict')
 from index.mainpage import mainpage
 from index.graph import graph
-# from index.aiimage import aiimage
+from index.image_predict import image_predict
 
 
 def router(SITE):
@@ -15,7 +15,7 @@ def router(SITE):
     functions = {
         '': mainpage.mainpage,
         'graph': graph.graph,
-        # 'aiimage': aiimage.aiimage
+        'image_predict': image_predict.image_predict
         # 'users': users,
         # 'help': help
     }

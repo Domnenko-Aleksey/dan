@@ -18,16 +18,81 @@ async def index_r(request):
     SITE = site(request)
     print('******* INDEX *****************************')
 
-    SITE.post = await request.post()  # Ждём получение файлов методом POST
+    # request.post() - вся полезная нагрузка считывается в память, что приводит к возможным ошибкам OOM. 
+    # Чтобы избежать этого, для составных загрузок вы должны использовать Request.multipart()
+    if 'file_upload_ajax' in SITE.p:
+        
+        reader = await request.multipart()
+
+        # reader.next() will `yield` the fields of your form
+
+        SITE.post = {}
+        SITE.file = {}
+
+        with await reader.next() as field:
+            print('FIELD NAME', field.name)
+
+
+        '''
+        field = await reader.next()
+        assert field.name == 'id'
+        SITE.post[field.name] = await field.read(decode=True)
+
+        field = await reader.next()
+        assert field.name == 'image'
+        filename = field.filename
+
+        SITE.file[field.name] = {'filename': filename, 'field': field}
+
+        # You cannot rely on Content-Length if transfer is chunked.
+        size = 0
+        with open('tmp/file.tmp', 'wb') as f:
+            while True:
+                chunk = await field.read_chunk()  # 8192 bytes by default.
+                if not chunk:
+                    break
+                size += len(chunk)
+                f.write(chunk)
+        '''
+
+
+
+
+
+
+
+    else:
+        SITE.post = await request.post()  # Ждём получение данных методом POST
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
     r = index.router(SITE)
 
+    # Обработка редиректа
     if r and 'redirect' in r:
         return web.HTTPFound(r['redirect'])
 
-    auth = 1
+    # Обработка ajax
+    if r and 'ajax' in r:
+        return web.HTTPOk(text=r['ajax'])
 
+    auth = 1
     return {'AUTH': auth, 'content': SITE.content, 'head': SITE.getHead(), 'test_1': 'TEST 1', 'test_2': 'TEST 2'}
-    # return web.Response(text=text)
 
 async def ws(request):
     # Веб-сокеты
@@ -52,7 +117,6 @@ async def system_r(request):
         return web.HTTPOk(text=r['ajax'])
 
     auth = 1
-
     return {'AUTH': auth, 'content': SITE.content, 'head': SITE.getHead()}
 
 
@@ -100,7 +164,8 @@ app.add_routes([web.static('/plugins', 'plugins'),
                 web.get('/edit/{url:.*}', edit),  # Режим визуального редактирования
                 web.get('/system/{url:.*}', system_r),  # Админка
                 web.post('/system/{url:.*}', system_r),  # Админка
-                web.get('/{url:.*}', index_r)])
+                web.get('/{url:.*}', index_r),
+                web.post('/{url:.*}', index_r)])
 
 if __name__ == '__main__':
     web.run_app(app)

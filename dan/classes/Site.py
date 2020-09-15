@@ -3,6 +3,7 @@ class Site:
         self.db = False  # Объект подключения к БД
         self.request = False   # request aiohttp
         # self.request.method = 'GET' / 'POST' / 'PUT' - метод передачи данных
+        self.file = False  # Полученый файл
         self.post = False  # объект post
         self.path = ''  # Путь
         self.p = ''  # Список элементов пути
