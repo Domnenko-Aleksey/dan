@@ -3,6 +3,7 @@ window.addEventListener('DOMContentLoaded', function(){
 });
 
 IMAGE_PREDICT = {
+    img_out_num: 1,
     image_files: false,
 
 	// Начальная инициализация
@@ -70,18 +71,20 @@ IMAGE_PREDICT = {
 				let data = JSON.parse(req.responseText)
 				if (data.answer == 'success') {
                     let rnd = Math.floor(Math.random() * 1000000);
-                    DAN.$('image_predict_img_target').innerHTML +=  '<div class="image_predict_container">'
-                    DAN.$('image_predict_img_target').innerHTML +=      '<div class="image_predict_title">Обрабатываемое изображение: ' + data.input_img + '</div>'
-                    DAN.$('image_predict_img_target').innerHTML +=      '<div id="img_predict_wrap"></div>'
-                    DAN.$('image_predict_img_target').innerHTML +=  '</div>'
+                    let out =   '<div class="image_predict_container">'
+                    out +=          '<div class="image_predict_title">Обрабатываемое изображение: ' + data.input_img + '</div>'
+                    out +=          '<div id="img_predict_wrap_' + IMAGE_PREDICT.img_out_num + '"></div>'
+                    out +=      '</div>'
+                    DAN.$('image_predict_img_target').innerHTML += out
 
                     let img = document.createElement('img')
                     img.className = 'image_predict_img'
                     img.src = data.img_path + '?' + rnd
 
-                    DAN.$('img_predict_wrap').appendChild(img)
+                    DAN.$('img_predict_wrap_' + IMAGE_PREDICT.img_out_num).appendChild(img)
 
-					num++
+                    num++
+                    IMAGE_PREDICT.img_out_num++
 					if (num < this.image_files.length) {
                         img.onload = ()=>{
                             IMAGE_PREDICT.image_load(num)
