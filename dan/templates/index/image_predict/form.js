@@ -56,7 +56,6 @@ IMAGE_PREDICT = {
 	image_load(num){
 		let req = new XMLHttpRequest()
         let form = new FormData()
-        form.append('id', '777')
 		form.append('image', this.image_files[num])
 		req.open('post', '/image_predict/file_upload_ajax', true)
 		req.send(form)
@@ -70,11 +69,23 @@ IMAGE_PREDICT = {
 				console.log(req.responseText)
 				let data = JSON.parse(req.responseText)
 				if (data.answer == 'success') {
-					DAN.$('image_predict_img_target').innerHTML += '<img class="image_predict_img" src="' + data.img_path + '">'
+                    let rnd = Math.floor(Math.random() * 1000000);
+                    DAN.$('image_predict_img_target').innerHTML +=  '<div class="image_predict_container">'
+                    DAN.$('image_predict_img_target').innerHTML +=      '<div class="image_predict_title">Обрабатываемое изображение: ' + data.input_img + '</div>'
+                    DAN.$('image_predict_img_target').innerHTML +=      '<div id="img_predict_wrap"></div>'
+                    DAN.$('image_predict_img_target').innerHTML +=  '</div>'
+
+                    let img = document.createElement('img')
+                    img.className = 'image_predict_img'
+                    img.src = data.img_path + '?' + rnd
+
+                    DAN.$('img_predict_wrap').appendChild(img)
 
 					num++
 					if (num < this.image_files.length) {
-						this.image_load(num)
+                        img.onload = ()=>{
+                            IMAGE_PREDICT.image_load(num)
+                        }
 					} else {
 						DAN.$('modal_result').innerHTML = 'Загрузка завершена'
 						DAN.modal.del()

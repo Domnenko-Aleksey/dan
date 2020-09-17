@@ -1,48 +1,30 @@
 # from system.catalog.classes.Char import Char
 import sys
 import json
-# sys.path.append('system/catalog/classes')
+import uuid
+# --- DETECT ---
+sys.path.append('yolov5_master')
+from dan_detect import dan_detect_init
 
 
 def file_upload_ajax(SITE):
     print('PATH -> index/image_predict/file_upload_ajax.py')
 
-    print('--- --- --- --- ---')
-    print(SITE.file)
+    # Загрузка файла
+    # unique_filename = str(uuid.uuid4())
+    filename = SITE.post['image'].filename
+    content = SITE.post['image'].file.read()
 
-    '''
-    filename = SITE.file['image']
+    # img_input_path = 'media/yolov5/images/' + unique_filename + '.jpg'
+    img_input_path = 'media/yolov5/images/image.jpg'
+    with open(img_input_path, 'wb') as f:
+        f.write(content)
 
-    # You cannot rely on Content-Length if transfer is chunked.
-    size = 0
-    with open(filename, 'wb') as f:
-        while True:
-            chunk = filename['field'].read_chunk()  # 8192 bytes by default.
-            if not chunk:
-                break
-            size += len(chunk)
-            f.write(chunk)
+    # Обраюотка файла YOLOv3
+    dan_detect_init()
 
-
-
-
-
-    field = SITE.post['image']
-
-    with open('777.jpg', 'wb') as f:
-        while True:
-            chunk = field.read_chunk()  # 8192 bytes by default.
-            if not chunk:
-                break
-            size += len(chunk)
-            f.write(chunk)
-
-    '''
-
-
-
-
-    img_path = '/media/soyuz.jpg'
-
-    answer = {'answer': 'success', 'img_path': img_path}
+    img_output_path = 'media/yolov5/output/image.jpg'
+    answer = {'answer': 'success', 'img_path': img_output_path, 'input_img': filename}
     return {'ajax': json.dumps(answer)}
+
+

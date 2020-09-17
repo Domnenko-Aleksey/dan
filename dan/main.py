@@ -12,74 +12,16 @@ from index import index
 from system import system
 
 
+
+import time
+
 @aiohttp_jinja2.template('index/index.html')
 async def index_r(request):
     # Основной режим вывода содержимого
     SITE = site(request)
     print('******* INDEX *****************************')
 
-    # request.post() - вся полезная нагрузка считывается в память, что приводит к возможным ошибкам OOM. 
-    # Чтобы избежать этого, для составных загрузок вы должны использовать Request.multipart()
-    if 'file_upload_ajax' in SITE.p:
-        
-        reader = await request.multipart()
-
-        # reader.next() will `yield` the fields of your form
-
-        SITE.post = {}
-        SITE.file = {}
-
-        with await reader.next() as field:
-            print('FIELD NAME', field.name)
-
-
-        '''
-        field = await reader.next()
-        assert field.name == 'id'
-        SITE.post[field.name] = await field.read(decode=True)
-
-        field = await reader.next()
-        assert field.name == 'image'
-        filename = field.filename
-
-        SITE.file[field.name] = {'filename': filename, 'field': field}
-
-        # You cannot rely on Content-Length if transfer is chunked.
-        size = 0
-        with open('tmp/file.tmp', 'wb') as f:
-            while True:
-                chunk = await field.read_chunk()  # 8192 bytes by default.
-                if not chunk:
-                    break
-                size += len(chunk)
-                f.write(chunk)
-        '''
-
-
-
-
-
-
-
-    else:
-        SITE.post = await request.post()  # Ждём получение данных методом POST
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
+    SITE.post = await request.post()
 
     r = index.router(SITE)
 
@@ -154,7 +96,7 @@ def site(request):
 
 
 
-app = web.Application()
+app = web.Application(client_max_size=1024**8)
 aiohttp_jinja2.setup(app, loader=jinja2.FileSystemLoader('templates'))
 app.add_routes([web.static('/plugins', 'plugins'),
                 web.static('/lib', 'lib'),
