@@ -1,0 +1,4 @@
+train: dan/images/train
+val: dan/images/val
+nc: 3
+names: ['pen', 'pencil', 'marker']

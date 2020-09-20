@@ -1,0 +1,85 @@
+ОБУЧЕНИЕ:
+https://bolster.ai/blog/logo-detection-using-yolo-v5-and-pytorch/
+https://www.curiousily.com/posts/object-detection-on-custom-dataset-with-yolo-v5-using-pytorch-and-python/
+https://blog.roboflow.com/how-to-train-yolov5-on-a-custom-dataset/
+https://habr.com/ru/post/507900/
+
+Чтобы обучить наш детектор, мы делаем следующие шаги:
+
+Установите зависимости YOLOv5
+Загрузить пользовательские данные обнаружения объектов YOLOv5
+Определение конфигурации и архитектуры модели YOLOv5
+Обучите кастомный детектор YOLOv5
+Оцените производительность YOLOv5
+Визуализируйте данные тренировки YOLOv5
+Запустите YOLOv5 Inference на тестовых изображениях
+Экспорт сохраненных весов YOLOv5 для будущего вывода
+
+
+
+
+
+ПОДГОТОВКА ПОЛЬЗОВАТЕЛЬСКОГО НАБОРА ДАННЫХ
+Создадим следующую файловую систему
+	- images
+		- train
+		- val
+	- labels
+		- train
+		- val
+	
+Labels содержат текстовый файл класса объекта и расположение якорного поля.
+	'номер-класса x-центра y-центра width height' ->
+	'1 0.483974 0.484375 0.679487 0.377404'
+		
+Информация о данных будет храниться в файле data.yaml. Создадим этот файл со следующим содержанием:
+	train: dan/images/train  # папка с учебными изображениями
+	val: dan/images/val  # папка с тестовыми изображениями
+	nc: 3  # Колисество классов
+	names: ['pen', 'pencil', 'marker']  # Имена классов
+
+
+Необходимо положить архитектуру в директорию yolov5/models/. 
+	Возьмем за основу архитектуру yolov5x.yaml и поместим в dan_yolov5x.yaml изменить информацию:
+	nc: 3  # Количество классов
+
+
+
+
+
+ОБУЧИМ НАШУ МОДЕЛЬ
+	Будем использовать самую большую модель YOLOv5x (параметры 89M ), которая также является наиболее точной.
+		--img 640 - изменить размер изображения до 640x640 пикселей
+		--batch 4 - 4 изображения в пакете
+		--epochs 30 - 30 эпох
+		--data ./DAN/images/data/data.yaml - путь к конфигурации набора данных
+		--cfg ./models/yolov5x.yaml - конфигурация модели
+		--weights yolov5x.pt - используйте предварительно обученные веса из модели YOLOv5x
+		--name dan_yolov5s_results - название нашей модели
+		--cache - кэшировать изображения наборов данных для более быстрого обучения
+	
+	python train.py --img 416 --batch 4 --epochs 50 --data ./DAN/data.yaml --cfg ./models/dan_yolov5x.yaml --weights '' --name dan_yolov5s_results --nosave --cache
+
+	Результаты выполнения в папке 
+		- yolov5_master/runs/exp0_dan_yolov5s_results  # Учебная папка
+		- yolov5_master/runs/exp1_dan_yolov5s_results  # Папка с результатом
+		- runs/exp1_dan_yolov5s_results/results.txt  # Результат вычисления
+		- runs/exp1_dan_yolov5s_results/results.png  # Графики коэффициентов
+
+
+
+
+	
+ТЕСТИРОВАНИЕ
+	В качестве источника нам нужен каталог тестовых данных. Результат будет в папке вывода. 
+	Из папки runs/exp1_dan_yolov5s_results копирум папку весов weights в папку DAN
+	
+	Запускаем обнаружение
+	python detect.py --img-size 416 --source ./DAN/images/test/ --weights ./DAN/weights/last.pt --conf 0.4 --save-txt
+		--conf 0.4  # Вероятность предсказания
+		--save-txt  # Результаты сохраняются в директорию inference/output/ как изображения, так и TXT-файлы
+		
+		
+		
+		
+		
