@@ -1,0 +1,141 @@
+.flex_row.accordion_container, .flex_row .dan_accordion_container {
+    overflow: visible;
+}
+
+.dan_accordion_container {
+    width: 100%;
+}
+
+.dan_accordion_head svg {
+    width: 25px;
+    height: 25px;
+    margin: 0 10px;
+}
+
+.dan_accordion_content {
+    border: none !important;
+}
+
+.accordion_container {
+    margin-top: 10px;
+}
+
+.dan_accordion_container {
+    flex-grow: 1;
+}
+
+.dan_accordion_head_title {
+    padding-left: 15px;
+}
+
+.dan_accordion_content {
+    padding: 15px;
+}
+
+
+/* --- Filter --- */
+.section_filter_add_button {
+    padding: 5px 15px;
+    font-size: 16px;
+    border: 1px solid #0099f1;
+    background: #00adff;
+}
+
+.section_filter_button_wrap {
+    margin-bottom: 10px;
+}
+
+.section_filter_button_wrap div{
+    display: inline-block;
+    margin-right: 7px;
+    color: #fff;
+    text-decoration: none !important;
+    text-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+    box-sizing: border-box;
+    border-radius: 20px;
+    cursor: pointer;
+    -webkit-appearance: none;
+    transition: background 0.5s;
+}
+
+#section_filter_list {
+    position: relative;
+}
+
+.section_filter_title_tab {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #e7e7e7;
+}
+
+.section_filter_title_tab td {
+    height: 50px;
+}
+
+.section_filter_column_title {
+    display: inline-block;
+    height: 20px;
+    line-height: 20px;
+}
+
+.section_filter_tab {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.section_filter_tab td {
+    vertical-align: middle;
+}
+
+.section_filter_tab:nth-child(odd){
+    background-color: #ffffff;  
+}
+
+.section_filter_tab:nth-child(even){
+    background-color: #f3f4f5;  
+}
+
+.section_filter_tab_ico_dnd {
+    width: 50px;
+}
+
+.section_filter_tab_name {
+    width: 200px;
+}
+
+.section_filter_tab_type {
+    width: 70px;
+}
+
+.section_filter_tab_delete {
+    width: 30px;
+}
+
+.section_filter_input_number {
+    margin-right: 10px;
+    width: 70px;
+}
+
+.section_filter_input_string{
+    width: 100% !important;
+    max-width: 400px;
+}
+
+.section_filter_tab .drag_drop_ico {
+    width: 20px;
+    height: 20px;
+    fill: var(--color-active);
+    border: 2px solid var(--color-active);
+    border-radius: 20px;
+    padding: 5px;
+    cursor: move;
+    transition: 0.3s;
+}
+
+.section_filter_delete {
+    width: 12px;
+    height: 12px;
+    fill: #ff0000;
+    cursor: pointer;
+}
+

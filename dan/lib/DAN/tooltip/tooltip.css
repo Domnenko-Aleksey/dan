@@ -1,0 +1,82 @@
+.tooltip {
+	position: absolute;
+	display: inline-block;
+	overflow: hidden;
+	box-sizing: border-box;
+	margin-left: 10px;
+    height: 20px;
+    width: 20px;
+    color: #999;
+    border-radius: 50%;
+    cursor: default;
+}
+
+.tooltip:before {
+	z-index: 10;
+	position: absolute;
+	content: '';
+	height: 20px;
+    width: 20px;
+	top: 0px;
+	left: 0px;
+    background: url(/lib/DAN/tooltip/help_1.png) no-repeat;
+    background-size: contain;
+    background-color: #ffffff;
+}
+
+.tooltip:hover:after {
+	content: '';
+	height: 40px;
+    width: 40px;
+    background: url(/lib/DAN/tooltip/help_2.png) no-repeat;
+    background-size: contain;
+    background-color: #ffffff;
+}
+
+.tooltip:hover{
+	overflow: auto;
+	position: absolute;
+	z-index: 20;
+	margin: -10px 0px 0px -10px;
+	padding: 10px;
+	min-height: 100px;
+	width: 400px;
+	height: auto;
+	color: #000000;
+	border: 1px solid #2BB0D7;
+	border-radius: 5px;
+	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+    background-color: #9FDAEE;
+}
+
+
+.tooltip:hover > :nth-child(1):not(em) {
+	padding-top: 50px;
+}
+
+.tooltip:hover em {
+	padding-left: 50px;
+}
+
+.tooltip:hover::before {
+	z-index: 10;
+	position: absolute;
+	content: '';
+	height: 50px;
+    width: 50px;
+	top: 0px;
+	left: 0px;
+    background: url(/lib/DAN/tooltip/help_2.png) no-repeat;
+    background-color: #9FDAEE;
+    background-position: 0 0;
+}
+
+.tooltip em {
+	margin: 0px;
+    padding: 10px 10px 10px 25px;
+    font-size: 16px;
+    font-weight: bold;
+    font-style: italic;
+    display: block;
+    color: #000000;
+}

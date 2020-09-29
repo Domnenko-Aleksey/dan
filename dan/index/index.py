@@ -4,8 +4,8 @@ sys.path.append('index/mainpage')
 sys.path.append('index/graph')
 sys.path.append('index/image_predict')
 from index.mainpage import mainpage
-from index.graph import graph
-from index.image_predict import image_predict
+# from index.graph import graph
+# from index.image_predict import image_predict
 
 
 def router(SITE):
@@ -14,8 +14,8 @@ def router(SITE):
     # Вызов функций по ключу
     functions = {
         '': mainpage.mainpage,
-        'graph': graph.graph,
-        'image_predict': image_predict.image_predict
+        # 'graph': graph.graph,
+        # 'image_predict': image_predict.image_predict
         # 'users': users,
         # 'help': help
     }

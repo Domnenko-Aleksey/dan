@@ -9,6 +9,8 @@ from system.catalog.section.ordering import ordering
 from system.catalog.section.pub import pub
 from system.catalog.section.delete import delete
 from system.catalog.section.section_list import section_list
+from system.catalog.section.filter_add_ajax import filter_add_ajax
+from system.catalog.section.filter_delete_ajax import filter_delete_ajax
 
 
 def section(SITE):
@@ -25,6 +27,8 @@ def section(SITE):
         'pub': pub,
         'unpub': pub,
         'delete': delete,
+        'filter_add_ajax': filter_add_ajax,
+        'filter_delete_ajax': filter_delete_ajax
     }
 
     if (SITE.p[2] in functions):

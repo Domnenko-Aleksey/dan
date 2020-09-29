@@ -81,5 +81,8 @@ Labels содержат текстовый файл класса объекта 
 		
 		
 		
-		
+ВИДЕО
+	Обнаружение объекта
+	cd C:\github\dan\dan\yolov5_master
+	python detect.py --source ./DAN/video/test.mp4 --weights yolov5s.pt --conf 0.4 --save-txt
 		

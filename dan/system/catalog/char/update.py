@@ -4,7 +4,7 @@ from system.catalog.classes.Char import Char
 
 
 def update(SITE):
-    print('FUNCTION -> system-> calalog -> char -> update')
+    print('FILE -> /system/calalog/char/update.py')
 
     if 'cancel' in SITE.post:
         return {'redirect': '/system/catalog/char/' + SITE.post['catalog_id']}
