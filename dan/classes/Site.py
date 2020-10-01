@@ -11,7 +11,8 @@ class Site:
         self.tag_title = ''  # Тег title
         self.tag_description = ''  # Метатег descripton
         self.content = ''  # Основное содержимое
-        self.modules = {}  # Словарь модуле
+        self.modules = {}  # Словарь модулей
+        self.template = 0  # Шаблон вывода
         self.salt = 'DAN_core_salt'  # Соль
         self.settings = ''  # Словарь настроек сайта
         self.headFile = []  # Файлы для вывода в шапке шаблона
