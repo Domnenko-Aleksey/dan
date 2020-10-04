@@ -1,0 +1,37 @@
+.mod_catalog_section_items_container {
+	display: block;
+	flex-basis: 300px;
+	flex-grow: 1;
+	max-width: 400px;
+	margin: 10px;
+	padding: 10px;
+	box-sizing: border-box;
+	border: solid 1px #cccccc;
+	border-radius: 10px;
+	text-decoration: none;
+	background-color: #ffffff;
+}
+
+.mod_catalog_section_items_container img {
+	width: 100%;
+}
+
+.mod_catalog_section_items_title {
+	font-size: 18px;
+	font-weight: 600;
+	color: #000;
+	text-align: center;
+	padding: 10px 0px;
+}
+
+.mod_catalog_section_items_text {
+	font-size: 14px;
+	color: var(--color-0)
+}
+
+.mod_catalog_section_items_chars {
+	margin-top: 10px;
+	font-size: 14px;
+	font-style: italic;
+	color: var(--color-0)
+}

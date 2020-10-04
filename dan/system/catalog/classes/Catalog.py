@@ -80,7 +80,7 @@ class Catalog:
         if short:
             sql = "SELECT id, parent_id, name, status FROM sections WHERE catalog_id = %s ORDER BY ordering"
         else:
-            sql = "SELECT * FROM sections WHERE catalog_id = %s ORDER BY ordering"
+            sql = "SELECT * FROM com_catalog_sections WHERE catalog_id = %s ORDER BY ordering"
         self.db.execute(sql, catalog_id)
         rows = self.db.fetchall()
         return rows if len(rows) > 0 else False

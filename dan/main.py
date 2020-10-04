@@ -10,10 +10,8 @@ sys.path.append('index')
 from Site import Site
 from index import index
 from system import system
-
-
-
 import time
+
 
 @aiohttp_jinja2.template('index/index.html')
 async def index_r(request):

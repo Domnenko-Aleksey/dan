@@ -5,28 +5,28 @@ class Section:
         self._breadcrumbs_path = []
 
     def getSection(self, id):
-        sql = "SELECT `id`, `catalog_id`, `parent_id`, `name`, `text`, `data`, `status`, `ordering` FROM sections WHERE id = %s"
+        sql = "SELECT `id`, `catalog_id`, `parent_id`, `name`, `text`, `data`, `status`, `ordering` FROM com_catalog_sections WHERE id = %s"
         self.db.execute(sql, id)
         return self.db.fetchone()
 
     def getSectionsByCatalogId(self, data):
         if data['parent_id']:
-            sql = "SELECT `id`, `parent_id`, `name`, `text`, `data`, `status` FROM sections WHERE catalog_id = %s AND parent_id = %s ORDER BY ordering"
+            sql = "SELECT `id`, `parent_id`, `name`, `text`, `data`, `status` FROM com_catalog_sections WHERE catalog_id = %s AND parent_id = %s ORDER BY ordering"
             self.db.execute(sql, (data['catalog_id'], data['parent_id']))
         else:
-            sql = "SELECT `id`, `parent_id`, `name`, `text`, `data`, `status` FROM sections WHERE catalog_id = %s ORDER BY ordering"
+            sql = "SELECT `id`, `parent_id`, `name`, `text`, `data`, `status` FROM com_catalog_sections WHERE catalog_id = %s ORDER BY ordering"
             self.db.execute(sql, data['catalog_id'])
         rows = self.db.fetchall()
         return rows if len(rows) > 0 else False
 
     def getItems(self, section_id):
-        sql = "SELECT * FROM items WHERE section_id = %s ORDER BY ordering"
+        sql = "SELECT * FROM com_catalog_items WHERE section_id = %s ORDER BY ordering"
         self.db.execute(sql, section_id)
         rows = self.db.fetchall()
         return rows if len(rows) > 0 else False
 
     def insert(self, data):
-        sql = "INSERT INTO sections SET `catalog_id` = %s, `parent_id` = %s, `name` = %s, `image` = '', `text` = %s, `data` = %s, `date` = NOW(), `status` = %s, `ordering` = %s"
+        sql = "INSERT INTO com_catalog_sections SET `catalog_id` = %s, `parent_id` = %s, `name` = %s, `image` = '', `text` = %s, `data` = %s, `date` = NOW(), `status` = %s, `ordering` = %s"
         return self.db.execute(sql, (
             data['catalog_id'],
             data['parent_id'],
@@ -38,7 +38,7 @@ class Section:
         ))
 
     def update(self, data):
-        sql = "UPDATE sections SET `parent_id` = %s, `name` = %s, `image` = '', `text` = %s, `data` = %s, `date` = NOW(), `status` = %s, `ordering` = %s WHERE id = %s"
+        sql = "UPDATE com_catalog_sections SET `parent_id` = %s, `name` = %s, `image` = '', `text` = %s, `data` = %s, `date` = NOW(), `status` = %s, `ordering` = %s WHERE id = %s"
         return self.db.execute(sql, (
             data['parent_id'],
             data['name'],
@@ -88,7 +88,7 @@ class Section:
                 list_id[n] = next
 
         for ordering in range(len(list_id)):
-            sql = "UPDATE sections SET ordering = %s WHERE id = %s"
+            sql = "UPDATE com_catalog_sections SET ordering = %s WHERE id = %s"
             self.db.execute(sql, (ordering + 1, list_id[ordering]))
 
         return section['catalog_id']
@@ -101,7 +101,7 @@ class Section:
 
         status = status_dict[type]
 
-        sql = "UPDATE sections SET `status` = %s WHERE id = %s"
+        sql = "UPDATE com_catalog_sections SET `status` = %s WHERE id = %s"
         self.db.execute(sql, (status, id))
 
         return self.getSection(id)['catalog_id']
@@ -127,7 +127,7 @@ class Section:
                 curent_level = 1000
 
         for delete_id in rows_delete:
-            sql = "DELETE FROM sections WHERE id = %s"
+            sql = "DELETE FROM com_catalog_sections WHERE id = %s"
             self.db.execute(sql, delete_id)
     
         return cat_id

@@ -30,7 +30,7 @@ def update(SITE):
             if key == 'char_name_id[]':
                 char_dict['name_id'] = value
                 char_dict['ordering'] = i
-
+            
             if key == 'char_value[]':
                 char_dict['value'] = value
                 chars.append(char_dict)

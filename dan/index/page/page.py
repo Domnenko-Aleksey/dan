@@ -1,13 +1,29 @@
 from aiohttp import web
 import sys
 sys.path.append('index/page')
-from index.page.classes.Page import Page
+sys.path.append('index/modules')
+from index.modules import catalog_section_items
 
 def page(SITE):
     print('PATH -> index/page/page.py')
-    page_id = 1
 
-    SITE.content = '<div class="w1200, p_40_20">Страница вывода PAGE</div>'
-    
-    if not page_id:
+    # ЧПУ URL
+    print(SITE.p[1])
+    if SITE.p[1] == 'section':
+        catalog_sections(SITE)
+    elif SITE.p[1] == 'item':
+        catalog_items(SITE)
+    else:
         raise web.HTTPNotFound()
+
+        
+
+def catalog_sections(SITE):
+    section_id = 1
+
+    SITE.content =  '<div class="bg_gray">'
+    SITE.content +=     '<div class="w1200 p_40_20 bg_gray">'
+    SITE.content +=         '<h1>Разделы каталога 1</h1>'
+    SITE.content +=         '<div class="flex_row">' + catalog_section_items.catalog_section_items(SITE, section_id) + '</div>'
+    SITE.content +=     '</div>'
+    SITE.content += '</div>'

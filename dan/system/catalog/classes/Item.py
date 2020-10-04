@@ -4,13 +4,13 @@ class Item:
 
 
     def getItem(self, item_id):
-        sql = "SELECT * FROM items WHERE id = %s"
+        sql = "SELECT * FROM com_catalog_items WHERE id = %s"
         self.db.execute(sql, item_id)
         return self.db.fetchone()
 
 
     def insert(self, data):
-        sql = "INSERT INTO items SET `section_id` = %s, `name` = %s, `image` = '', `text` = %s, `data` = %s, `date` = NOW(), `status` = %s, `ordering` = %s"
+        sql = "INSERT INTO com_catalog_items SET `section_id` = %s, `name` = %s, `image` = '', `text` = %s, `data` = %s, `date` = NOW(), `status` = %s, `ordering` = %s"
         return self.db.execute(sql, (
             data['section_id'],
             data['name'],
@@ -22,7 +22,7 @@ class Item:
 
 
     def update(self, data):
-        sql = "UPDATE items SET `name` = %s, `text` = %s, `data` = %s, `date` = NOW(), `status` = %s, `ordering` = %s WHERE id = %s"
+        sql = "UPDATE com_catalog_items SET `name` = %s, `text` = %s, `data` = %s, `date` = NOW(), `status` = %s, `ordering` = %s WHERE id = %s"
         return self.db.execute(sql, (
             data['name'],
             data['text'],
@@ -43,12 +43,12 @@ class Item:
         # Получаем список id раздела
 
 
-        sql = "SELECT section_id FROM items WHERE id = %s"
+        sql = "SELECT section_id FROM com_catalog_items WHERE id = %s"
         self.db.execute(sql, id)
         row = self.db.fetchone()
         section_id = row['section_id']
 
-        sql_s = "SELECT id FROM items WHERE section_id = %s"
+        sql_s = "SELECT id FROM com_catalog_items WHERE section_id = %s"
         self.db.execute(sql_s, section_id)
         rows = self.db.fetchall()
 
@@ -77,13 +77,13 @@ class Item:
                 list_id[n] = next
 
         for ordering in range(len(list_id)):
-            sql = "UPDATE items SET ordering = %s WHERE id = %s"
+            sql = "UPDATE com_catalog_items SET ordering = %s WHERE id = %s"
             self.db.execute(sql, (ordering + 1, list_id[ordering]))
 
         return section_id
 
     def getMaxOrdering(self, section_id):
-        sql = "SELECT MAX(ordering) ord FROM items WHERE section_id = %s"
+        sql = "SELECT MAX(ordering) ord FROM com_catalog_items WHERE section_id = %s"
         self.db.execute(sql, section_id)
         row = self.db.fetchone()
         return row['ord'] if row['ord'] is not None else 0
@@ -97,15 +97,13 @@ class Item:
 
         status = status_dict[type]
 
-        sql = "UPDATE items SET `status` = %s WHERE id = %s"
+        sql = "UPDATE com_catalog_items SET `status` = %s WHERE id = %s"
         self.db.execute(sql, (status, id))
 
         return self.getItem(id)['section_id']
     
     def delete(self, id):
-        print('------------------ID', id)
         item = self.getItem(id)
-        print('------------------ITEM', item)
-        sql = "DELETE FROM items WHERE id = %s"
+        sql = "DELETE FROM com_catalog_items WHERE id = %s"
         self.db.execute(sql, id)
         return item['section_id']

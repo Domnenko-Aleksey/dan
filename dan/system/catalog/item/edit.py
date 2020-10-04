@@ -17,10 +17,10 @@ def edit(SITE):
     CATALOG = Catalog(SITE)
     SECTION = Section(SITE)
     CHAR = Char(SITE)
+    ITEM = Item(SITE)
 
     if SITE.p[2] == 'edit':
         item_id = SITE.p[3]
-        ITEM = Item(SITE)
         item = ITEM.getItem(item_id)
         section_id = item['section_id']
         title = 'Редактировать элемент'
@@ -54,13 +54,17 @@ def edit(SITE):
     if chars:
         for char in chars:
             if char['type'] == 'number':
-                type_out = '<td class="char_tab_type">число</td>'
-                type_out += '<td class="char_tab_value"><input draggable="false" class="input char_input_number" type="text" name="char_value[]" value="' + char['value'] + '"></td>'
+                type_out =  '<td class="char_tab_type">число</td>'
+                type_out += '<td class="char_tab_value">'
+                type_out +=     '<input draggable="false" class="input char_input_number" type="text" name="char_value[]" value="' + char['value'] + '"> '
+                type_out += '</td>'
 
             if char['type'] == 'string':
-                type_out = '<td class="char_tab_type">строка</td>'
-                type_out += '<td class="char_tab_value"><input draggable="false" class="input char_input_string" type="text" name="char_value[]" value="' + char['value'] + '"></td>'
-
+                type_out =  '<td class="char_tab_type">строка</td>'
+                type_out += '<td class="char_tab_value">'
+                type_out +=     '<input draggable="false" class="input char_input_string" type="text" name="char_value[]" value="' + char['value'] + '">'
+                type_out += '</td>'
+            
             chars_out += '<table class="char_tab" data-id="' + str(char['id']) + '">'
             chars_out +=    '<tr>'
             chars_out +=        '<td class="char_tab_ico_dnd">'

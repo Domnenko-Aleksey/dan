@@ -75,7 +75,6 @@ class Char:
         sql += "ORDER BY v.ordering"
         self.db.execute(sql, item_id)
         rows = self.db.fetchall()
-        print('------------------', rows)
         return rows if rows is not None else False
 
     def deleteValue(self, id):
