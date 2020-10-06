@@ -5,7 +5,22 @@ class Catalog:
     def getItem(self, id):
         sql = "SELECT * FROM com_catalog_items WHERE id = %s"
         self.db.execute(sql, id)
-        return self.db.fetchone()
+        item = self.db.fetchone()
+
+        chars = self.getCharsByItemId(item['id'])
+        if chars:
+            chars_dict = {}
+            for char in chars:
+                if char['name'] not in chars_dict:
+                    chars_dict[char['name']] = {
+                        'unit': char['unit'],
+                        'type': char['type'],
+                        'values': [char['value']]
+                    }
+                else:
+                    chars_dict[char['name']]['values'].append(char['value'])
+        item['chars'] = chars_dict
+        return item
 
     def getSectionItems(self, section_id, chars=False):
         if chars:
