@@ -5,13 +5,25 @@ def mainpage(SITE):
     print('FUNCTION -> index/mainpage')
     print('SYS.PATH - INDEX ', sys.path)
 
-    SITE.content += f'''<div class="mainpage_container">
+    SITE.content += f'''
+    <header>
+        <div class="w1200 wrap flex_row">
+            <div class="header_left"><a href="/" class="header_title">Союз</a><a href="/" class="header_subtitle"></a></div>
+            <div class="header_center"></div>
+            <div class="header_right">
+                <div class="mod_authorization_container">
+                    <div id="mod_authorization_button_login" class="mod_authorization_button">Войти</div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="mainpage_container">
             <div class="w1200 wrap flex_between mainpage_wrap ">
                 <div class="mainpage_block">
                     <div>
-                        <div class="mainpage_title">Разработка чат-бота</div>
+                        <div class="mainpage_title">Предиктивная аналитика в металлургии</div>
                         <div>
-                            <br><i class="mainpage_text" style="font-size: 24px;">Разработка функционала чат-ботов, который помогает пользователям с повседневными задачами</i></div>
+                            <br><i class="mainpage_text" style="font-size: 24px;">Cистема анализа зависимости износа гильзы кристаллизатора от параметров работы машины непрерывного литья заготовок с возможностью предсказания аварийных ситуаций, реализованной на основе полносвязной и свёрточной нейронной сети</i></div>
                         <!--<table style="margin-top:30px;">
                             <tbody>
                                 <tr>
@@ -121,4 +133,8 @@ def mainpage(SITE):
 				</div>
 			</div>
 		</div>
+        <footer>
+            <div>Команда "Союз", "Цифровой прорыв"</div>
+            <div>Текст, {{test_1}} текст, {{test_2}} текст</div>
+        </footer>
     '''

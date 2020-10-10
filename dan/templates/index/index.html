@@ -6,26 +6,8 @@
 <title>Тестовая веб-сайт страница</title>
 {{ head | safe }}
 </head>
-<body style="">
-    <header>
-        <div class="w1200 wrap flex_row">
-            <div class="header_left"><a href="/" class="header_title">Союз</a><a href="/" class="header_subtitle"></a></div>
-            <div class="header_center"></div>
-            <div class="header_right">
-                <div class="mod_authorization_container">
-                    <div id="mod_authorization_button_login" class="mod_authorization_button">Войти</div>
-                </div>
-            </div>
-        </div>
-    </header>
-    <section>
-		{{ content | safe }}
-    </section>
-    <footer>
-        <div>Команда "Союз", "Цифровой прорыв"</div>
-		<div>Текст, {{test_1}} текст, {{test_2}} текст</div>
-    </footer>
-
+<body>
+{{ content | safe }}
 </body>
 
 <body>
