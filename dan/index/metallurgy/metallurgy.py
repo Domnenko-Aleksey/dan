@@ -15,6 +15,7 @@ from alarm import alarm
 
 def metallurgy(SITE):
     print('PATH -> index/metallurgy/metallurgy.py')
+    SITE.section_id = 1
 
     functions = {
         '': dashboard,
