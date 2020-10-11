@@ -12,6 +12,7 @@ from dataset_generation import dataset_generation
 from model import model
 from input_data import input_data
 from alarm import alarm
+from help_page import help_page
 
 def metallurgy(SITE):
     print('PATH -> index/metallurgy/metallurgy.py')
@@ -29,7 +30,8 @@ def metallurgy(SITE):
         'dataset_generation': dataset_generation,
         'model': model,
         'input_data': input_data,
-        'alarm': alarm
+        'alarm': alarm,
+        'help': help_page
     }
 
     if (SITE.p[1] not in functions):
