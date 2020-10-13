@@ -95,7 +95,7 @@ h1 {
 
 .header_right {
 	display: flex;
-	flex-basis: 320px;
+	flex-basis: 305px;
     align-items: center;
 	padding-left: 20px;
 	box-sizing: border-box;

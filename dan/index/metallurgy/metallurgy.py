@@ -5,9 +5,6 @@ from dashboard import dashboard
 from section import section
 from item import item
 from dataset import dataset
-from dataset_edit import dataset_edit
-from dataset_delete import dataset_delete
-from dataset_update import dataset_update
 from dataset_generation import dataset_generation
 from model import model
 from input_data import input_data
@@ -23,10 +20,6 @@ def metallurgy(SITE):
         'section': section,
         'item': item,
         'dataset': dataset,
-        'dataset_add': dataset_edit,
-        'dataset_edit': dataset_edit,
-        'dataset_update': dataset_update,
-        'dataset_delete': dataset_delete,
         'dataset_generation': dataset_generation,
         'model': model,
         'input_data': input_data,

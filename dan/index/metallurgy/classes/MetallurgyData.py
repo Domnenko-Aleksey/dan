@@ -1,6 +1,12 @@
 class MetallurgyData:
     def __init__(self, SITE):
         self.db = SITE.db
+    
+    def getAll(self):
+        sql = "SELECT * FROM com_metallurgy_data"
+        self.db.execute(sql)
+        rows = self.db.fetchall()
+        return rows if len(rows) > 0 else False
 
     def getRow(self, id):
         sql = "SELECT * FROM com_metallurgy_data WHERE id = %s"
