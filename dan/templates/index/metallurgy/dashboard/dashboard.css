@@ -108,10 +108,58 @@
 
 .main_right_content hr {
 	width: 100%;
+	height: 1px;
+    border: none;
+    background: rgb(255 255 255 / 0.2);
 }
 
 footer {
 	display: flex;
 	flex-grow: 1;
 	height: 55px;
+}
+
+.block_info_title {
+	font-size:22px;
+	font-weight:600;
+}
+
+.product_name_container {
+	gap: 10px;
+	padding: 20px 10px;
+	box-shadow: rgba(82, 63, 105, 0.1) 0px 0px;
+}
+
+.product_name_item {
+	width: 100%;
+	align-items: center;
+	border-radius:10px;
+}
+
+.product_name {
+	padding: 0px 20px 0px 0;
+	font-size:18px;
+}
+
+.product_name_wear {
+	/* padding:5px; */
+	border-radius:10px;
+	font-weight: 600;
+	line-height: 24px;
+}
+
+#product_name_percent {
+	font-size: 28px;
+}
+
+.wear_low {
+	color:green;
+}
+
+.wear_medium {
+	color:orange;
+}
+
+.wear_high {
+	color:red
 }
