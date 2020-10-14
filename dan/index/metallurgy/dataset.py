@@ -18,7 +18,7 @@ def dataset(SITE):
     tr = ''
     for row in rows:
         tr +=   '<tr>'
-        tr +=       '<td>' + str(row['item_id']) + '</td>'
+        tr +=       '<td>' + str(row['id']) + '</td>'
         tr +=       '<td>' + str(row['p_1']) + '</td>'
         tr +=       '<td>' + str(row['p_2']) + '</td>'
         tr +=       '<td>' + str(row['p_3']) + '</td>'

@@ -14,8 +14,8 @@ class Model:
             [30, 35, 0.1, 'Tемпература воды, °C'],  # Температуры охлаждающей воды 30 - 35 / на входе 15 - 25, на выходе 40 - 45
             [45, 90, 0.05, 'Частота качания, n/мин.'],  # Частота качания 45 - 90 в минуту
             [2.0, 2.4, 0.18, 'Скорость движения, м/мин.'],  # Скорость движения  1.2 - 1.6 или 2,0 - 2,4 м/мин.
-            [0.8, 1, 0.08, 'Эффективный диаметр'],  # Эффективная длина гильзы, м
-            [2500, 14400, 0.27, 'Площадь сечения'],  # Площадь сечения гильзы, мм2
+            [0.8, 1, 0.08, 'Эффективная длинна, m'],  # Эффективная длина гильзы, м
+            [2500, 14400, 0.27, 'Площадь сечения, мм'],  # Площадь сечения гильзы, мм2
             [0.8, 1.2, 0.15, 'Нормализованная конусность']  # Нормализованная конусность - уточнить у металлургов
         ]
 
@@ -59,49 +59,17 @@ class Model:
             wear = ((n_melt*k_s)/melt)*100
 
             values.append(n_melt)
-            values.append(round(k_s, 6))
+            values.append(round(k_s, 4))
             values.append(round(wear, 2))
             dataset.append(values)
 
-            data = [n]
-            data.extend(values)
-            self.insertData(data)
+            self.insertData(values)
 
-            tr +=   '<tr>'
-            tr +=       '<td>' + str(n) + '</td>'
-            tr +=       '<td>' + str(values[0]) + '</td>'
-            tr +=       '<td>' + str(values[1]) + '</td>'
-            tr +=       '<td>' + str(values[2]) + '</td>'
-            tr +=       '<td>' + str(values[3]) + '</td>'
-            tr +=       '<td>' + str(values[4]) + '</td>'
-            tr +=       '<td>' + str(values[5]) + '</td>'
-            tr +=       '<td>' + str(values[6]) + '</td>'
-            tr +=       '<td>' + str(values[7]) + '</td>'
-            tr +=       '<td>' + str(values[9]) + '</td>'
-            tr +=   '<tr>'
-
-        out =   '<table class="table_list">'
-        out +=      '<tr>'
-        out +=          '<th>№</th>'
-        out +=          '<th>' + self.weights[0][3] + '</th>'
-        out +=          '<th>' + self.weights[1][3] + '</th>'
-        out +=          '<th>' + self.weights[2][3] + '</th>'
-        out +=          '<th>' + self.weights[3][3] + '</th>'
-        out +=          '<th>' + self.weights[4][3] + '</th>'
-        out +=          '<th>' + self.weights[5][3] + '</th>'
-        out +=          '<th>' + self.weights[6][3] + '</th>'
-        out +=          '<th>Кол-во плавок</th>'
-        out +=          '<th>Износ, %</th>'
-        out +=      '</tr>'
-        out +=      tr
-        out +=  '</table>'
-
-        return out
 
     # Добавляем данные (№ + датасет) в MySQL
     def insertData(self, data):
         sql =   "INSERT INTO com_metallurgy_data SET " 
-        sql +=  "item_id = %s, p_1 = %s, p_2 = %s, p_3 = %s, p_4 = %s, p_5 = %s, p_6 = %s, p_7 = %s, melt = %s, k = %s, wear = %s"
+        sql +=  "p_1 = %s, p_2 = %s, p_3 = %s, p_4 = %s, p_5 = %s, p_6 = %s, p_7 = %s, melt = %s, k = %s, wear = %s"
         return self.db.execute(sql, data)
 
     
