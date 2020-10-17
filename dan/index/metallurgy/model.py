@@ -104,7 +104,6 @@ def model(SITE):
     # ------- /
 
     # ------- Таблица данных для обучения модели -------
-
     tr = ''
     for i in range(80):
         row = X_train.iloc[i,]
@@ -116,8 +115,8 @@ def model(SITE):
         tr +=       '<td>' + str(row[3]) + '</td>'
         tr +=       '<td>' + str(row[4]) + '</td>'
         tr +=       '<td>' + str(row[5]) + '</td>'
-        tr +=       '<td>' + str(row[6]) + '</td>'
         tr +=       '<td>' + str(row[7]) + '</td>'
+        tr +=       '<td>' + str(y_train.iloc[i, 0]) + '</td>'
         tr +=   '<tr>'
 
     train_table =   '<table class="table_list">'
