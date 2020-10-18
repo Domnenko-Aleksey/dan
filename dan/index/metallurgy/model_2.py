@@ -1,18 +1,22 @@
 import pandas as pd
 import numpy as np
+# import tensorflow as tf
+# from tensorflow import keras
+from keras import models
+from keras import layers
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
 from sklearn import preprocessing
-from sklearn.metrics import accuracy_score
 from jinja2 import Template
 import sys
 sys.path.append('index/metallurgy/classes')
 from index.metallurgy.classes.Model import Model
 from index.metallurgy.classes.MetallurgyData import MetallurgyData
 
+from keras.datasets import boston_housing
 
-def model(SITE):
+
+def model_2(SITE):
     print('PATH -> index/metallurgy/model.py')
     SITE.addHeadFile('/templates/index/metallurgy/default/default.css')
     SITE.addHeadFile('/templates/index/metallurgy/model/model.css')
@@ -22,8 +26,56 @@ def model(SITE):
     MD = MetallurgyData(SITE)
     data = MD.getAll()
 
+    (train_data, train_targets), (test_data, test_targets) = boston_housing.load_data()
 
-    # ------- ЛИНЕЙНАЯ РЕГРЕССИЯ -------
+    print('SHAPE', train_date.shape, test_data.shape)
+
+
+    # Нормализация данных
+    mean = train_data.mean(axis=0)
+    train_data -= mean
+    std = train_data.std(axis=0)
+    train_data /= std
+
+    test_data -= mean
+    test_data /= std
+
+
+    # Конструирование сети
+    def build_model():
+        model = models.Sequential()
+        model.add(layers.Dense(64, activation='relu', input_shape=(train_data.shape[1],)))
+        model.add(layers.Dense(64, activation='relu'))
+        model.add(layers.Dense(1))
+        model.compile(optomizer='rmsprop', loss='mse', metrics=['mae'])
+        return model
+
+    
+    # Перекрёстная проверка по к блокам
+    k = 4
+    num_val_samples = len(train_data) // k
+    num_epochs = 100
+    all_scories = []
+
+    for i in range(k):
+        print('processing fold #', i)
+        val_data = train_data[i*num_val_samples: (i + 1)*num_val_samples]
+        val_targets = train_targets[i*num_val_samples: (i + 1)*num_val_samples]
+
+        # Подготовка обучающих данных из остальных блоков
+        partial_train_data = np.concatenate([
+            train_data[:i*num_val_samples],
+            
+            ])
+
+
+
+
+
+
+    return
+    '''
+    # ------- ПОЛНОСВЯЗНАЯ СЕТЬ -------
     df = pd.DataFrame(data)
 
     data = df.iloc[:,1:9]
@@ -32,12 +84,37 @@ def model(SITE):
     X_train, X_test, y_train, y_test = train_test_split(data, target, random_state=42, test_size=0.2)
 
     min_max_scaler = preprocessing.MinMaxScaler()
-    X_train_n = min_max_scaler.fit_transform(X_train)
-    X_test_n = min_max_scaler.fit_transform(X_test)
+    X_train_n = np.array(min_max_scaler.fit_transform(X_train), dtype='float32')
+    X_test_n = np.array(min_max_scaler.fit_transform(X_test), dtype='float32')
 
-    linear_regression = LinearRegression()  # normalize - False
-    model = linear_regression.fit(X_train_n, y_train)
-    predicted = model.predict(X_test_n)
+    y_train_n = np.array(y_train, dtype = 'float32')
+
+    # Создаём модель и добавляем слои
+    model = tf.keras.models.Sequential()
+    model.add(tf.keras.layers.Dense(100, activation="relu", input_shape=(X_train_n.shape[1],)))
+    model.add(tf.keras.layers.Dense(1, activation="softmax"))
+
+    model.compile(optimizer='rmsprop',
+        loss='mse',
+        metrics='accuracy'
+    )
+
+    # Запускаем модель обучения
+    history = model.fit(X_train_n, y_train_n, batch_size=8, epochs=10, validation_split=0.2)
+
+    return
+
+
+
+
+
+
+
+
+
+
+
+
 
     accuracy = int(model.score(X_test_n, y_test) * 100)
     print('Точность предсказаний на тестовой выборке:', accuracy, '%')
@@ -46,13 +123,13 @@ def model(SITE):
     # ------- /
 
 
-    # ------- ГРАФИКИ -------
+    # ------- График -------
     # Стандартное отклонение
     fig, ax = plt.subplots()
     plt.title('Стандартное отклонение', fontsize=16)
     plt.xlabel('Предсказаные значения', fontsize=12)
     plt.ylabel('Истинные значения', fontsize=12)
-    ax.scatter(predicted.tolist(), y_test, color='#3a7afe')
+    ax.scatter(predicted.tolist(), y_test)
     ax.plot([0, 100], [0,100], color='#10ca93', label='Модель')
     legend = ax.legend(loc='upper left', fontsize='12')
     legend = ax.legend()
@@ -61,15 +138,10 @@ def model(SITE):
     # Веса модели
     x = np.arange(8)
     fig, ax = plt.subplots()
-    label = ""
-    for i in  range(7):
-        label +=    str(i) + " - " + MODEL.weights[i][3] + "\n"
-    label +=    "8 - Количество плавок"
-    plt.bar(x, model.coef_[0], color='#3a7afe', label=label)
+    plt.bar(x, model.coef_[0])
     plt.xticks(x, ('1', '2', '3', '4', '5', '6', '7', '8'))
     plt.xlabel('№ Веса', fontsize=12)
     plt.ylabel('% Влияния', fontsize=12)
-    plt.legend()
     fig.savefig('templates/index/metallurgy/model/images/weights.png')  # Сохраняем график 
 
     # Предсказанные и истинные значения
@@ -79,8 +151,8 @@ def model(SITE):
     x = np.arange(20)
     fig, ax = plt.subplots()
     width = 0.3
-    ax.bar(x - width/2, pred, width, label='Предсказанные значения', color='#3a7afe')
-    ax.bar(x + width/2, y_t, width, label='Реальные значения', color='#ff7b06')
+    ax.bar(x - width/2, pred, width, label='Предсказанные значения')
+    ax.bar(x + width/2, y_t, width, label='Реальные значения')
     ax.set_title('Предсказанные и истинные значени', fontsize=16)
     ax.set_xticks(x)
     plt.xlabel('% износа', fontsize=12)
@@ -88,45 +160,6 @@ def model(SITE):
     ax.legend()
     fig.savefig('templates/index/metallurgy/model/images/predicted.png')  # Сохраняем график 
     # ------- /
-
-    # Гистограма износа test.
-    fig, ax = plt.subplots()
-    ax.hist(predicted, color='#3a7afe')
-    ax.set_title('Гистограмма износа гильз', fontdict={'fontsize':16, })
-    ax.set_xlabel('Износ')
-    ax.set_ylabel('Количество')
-    ax.figure.savefig('templates/index/metallurgy/model/images/hist_test.png')
-
-    # Гистограма износа target (all).
-    target_r = target.to_numpy().reshape(1, 100)[0]
-    fig, ax = plt.subplots()
-    ax.hist(target_r, bins=10, color='#3a7afe')
-    ax.set_title('Гистограмма износа гильз', fontdict={'fontsize':16})
-    ax.set_xlabel('Износ')
-    ax.set_ylabel('Количество')
-    ax.figure.savefig('templates/index/metallurgy/model/images/hist_target.png')
-
-    # График температуры стали.
-    steel_temperature = data['p_1'].to_numpy().reshape(1, 100)[0]
-    fig, ax = plt.subplots()
-    ax.plot(steel_temperature, color='#ff7b06')
-    ax.grid()
-    ax.set_xlim()
-    ax.set_xticks([])  # Не выводить ось х
-    ax.set_title('Температура стали', fontdict={'fontsize':16})
-    ax.set_ylabel('Температура')
-    ax.figure.savefig('templates/index/metallurgy/model/images/steel_temperature.png')
-
-    # График температуры воды.
-    water_temperature = data['p_2'].to_numpy().reshape(1, 100)[0]
-    fig, ax = plt.subplots()
-    ax.plot(water_temperature, color='#3a7afe')
-    ax.grid()
-    ax.set_xlim()
-    ax.set_xticks([])  # Не выводить ось х
-    ax.set_title('Температура воды', fontdict={'fontsize':16})
-    ax.set_ylabel('Температура')
-    ax.figure.savefig('templates/index/metallurgy/model/images/water_temperature.png')
 
 
     # ------- Таблица сравнения -------
@@ -201,3 +234,4 @@ def model(SITE):
         nav_alarm = '',
         nav_help = ''
     )
+    '''

@@ -7,6 +7,10 @@
 	padding: 30px;
 }
 
+.main_left > div {
+	gap:30px;
+}
+
 .main_left > div > div {
 	border-radius: 15px;
 	box-shadow: rgba(82, 63, 105, 0.05) 0px 0px 13px 0px;
@@ -21,13 +25,16 @@
 }
 
 .block_info_small {
-	display: flex;
 	flex-grow: 1;
-	flex-basis: 255px;
+	flex-basis: 400px;
 	box-sizing: border-box;
-	height: 200px;
+	min-height: 200px;
 	padding: 20px;
 	background: #ffffff;
+}
+
+.block_info_small img{
+	width: 100%;
 }
 
 .block_info_large {
@@ -138,7 +145,7 @@ footer {
 
 .product_name {
 	padding: 0px 20px 0px 0;
-	font-size:18px;
+	font-size: 14px;
 }
 
 .product_name_wear {
@@ -149,7 +156,7 @@ footer {
 }
 
 #product_name_percent {
-	font-size: 28px;
+	font-size: 18px;
 }
 
 .wear_low {
@@ -162,4 +169,84 @@ footer {
 
 .wear_high {
 	color:red
+}
+
+.button_blue {
+	cursor: pointer;
+    display: inline-block;
+    padding: 7px 25px;
+    font-size: 16px;
+    text-decoration: none;
+    background: var(--color-1);
+	color:#fff;
+}
+
+@media screen and (max-width: 600px) {
+	.block_info_small {
+		flex-basis: 255px;
+	}
+}
+
+@media screen and (min-width: 906px) {
+	.button_fixed_toolbar {
+		display:none;
+	}
+	
+	.toolbar_container_open {
+		position: fixed;
+		z-index: 30;
+		top: 0;
+		max-height: 100vh;
+	}
+}
+
+@media screen and (max-width: 905px) {
+	.main_wrap {
+		padding: 20px 20px 77px 20px;
+	}
+	
+	.main_left > div {
+		gap:20px;
+	}
+	
+	.block_info_title {
+		font-size: 18px;    
+	}
+	
+	.toolbar_container {
+		position: fixed;
+		z-index: 30;
+		top: 0;
+		max-height: 100vh;
+		left:-255px;
+		transition:left 0.3s;
+	}
+	
+	.toolbar_container_open {
+		left:0;
+	}
+	
+	.button_fixed_toolbar {
+		-webkit-transform: rotate(-90deg);  /*Поворот блока с текстом н 30 градусов*/
+		-moz-transform: rotate(-90deg);
+		-ms-transform: rotate(-90deg);
+		-o-transform: rotate(-90deg);
+		transform: rotate(-90deg);
+		position:fixed; /*фиксированная позиция при прокрутке*/
+		z-index:999;
+		left: 0px; /*отступ с права*/
+		top: 40%; /*отступ сверху*/
+		margin-left:-40px; /*отрицательный отступ справа (чем длиннее название кнопки тем больше должно быть значение данного отступа )*/
+		transition:margin-left 0.3s;
+	}
+	
+	.button_fixed_toolbar .button_blue {
+		box-shadow: rgba(82, 63, 105, 0.3) 0px 5px 40px 0px;
+		border-bottom-right-radius: 10px;
+		border-bottom-left-radius: 10px;
+	}
+	
+	.button_fixed_toolbar_open{
+		margin-left: 215px;
+	}
 }

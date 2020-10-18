@@ -1,19 +1,30 @@
-<div class="toolbar_container">
+<div id="button_fixed_toolbar" class="button_fixed_toolbar"><div class="button_blue">Изделия</div></div>
+<div id="toolbar_container" class="toolbar_container">
     <div class="toolbar">
         <div class="product_name_container flex_row">
-			<div class="product_name_item flex_row"><span class="product_name">Изделие № <span id="product_name_number">1</span></span><span class="product_name_wear wear_low"><span id="product_name_percent">33</span>%</div>
-			<div class="product_name_item flex_row"><span class="product_name">Изделие № <span id="product_name_number">2</span></span><span class="product_name_wear wear_medium"><span id="product_name_percent">50</span>%</div>
-			<div class="product_name_item flex_row"><span class="product_name">Изделие № <span id="product_name_number">3</span></span><span class="product_name_wear wear_high"><span id="product_name_percent">78</span>%</div>
+            {{ predicted_html }}
 		</div>
     </div>
 </div>
 <div class="main_wrap flex_row">
     <div class="main_left">
-        <div style="gap: 30px;" class="flex_row">
-            <div class="block_info_small"><div class="block_info_title">Температура изделия</div></div>
-            <div class="block_info_small"><div class="block_info_title">Износ изделия</div></div>
-            <div class="block_info_small"><div class="block_info_title">Деформация изделия</div></div>
-            <div class="block_info_small"><div class="block_info_title">Усталость металла</div></div>
+        <div class="flex_row">
+            <div class="block_info_small">
+                <div class="block_info_title">Износ гильз</div>
+                <div><img src="/templates/index/metallurgy/model/images/hist_target.png" alt=""></div>
+            </div>
+            <div class="block_info_small">
+                <div class="block_info_title">Факторы износа</div>
+                <div><img src="/templates/index/metallurgy/model/images/weights.png" alt=""></div>
+            </div>
+            <div class="block_info_small">
+                <div class="block_info_title">Температура стали</div>
+                <div><img src="/templates/index/metallurgy/model/images/steel_temperature.png" alt=""></div>
+            </div>
+            <div class="block_info_small">
+                <div class="block_info_title">Температура воды</div>
+                <div><img src="/templates/index/metallurgy/model/images/water_temperature.png" alt=""></div>
+            </div>
             <div class="block_info_small"><div class="block_info_title">Нагрузка на изделие</div></div>
         </div>
         <div style="margin-top: 30px;">
@@ -28,8 +39,8 @@
                     <img class="main_right_image" src="/templates/index/metallurgy/dashboard/images/person_1.jpg" alt="" />
                 </div>
                 <div class="main_right_content_item_content">
-                    <p>Джеф Каплан</p>
-                    <p>1 янв. 1995 г.</p>
+                    <p>Ольга Крылова</p>
+                    <p>оператор</p>
                 </div>
             </div>
             <hr />
@@ -38,8 +49,8 @@
                     <img class="main_right_image" src="/templates/index/metallurgy/dashboard/images/person_2.jpg" alt="" />
                 </div>
                 <div class="main_right_content_item_content">
-                    <p>Джеф Каплан</p>
-                    <p>1 янв. 1995 г.</p>
+                    <p>Алексей Иванов</p>
+                    <p>иженер</p>
                 </div>
             </div>
             <hr />
@@ -48,8 +59,8 @@
                     <img class="main_right_image" src="/templates/index/metallurgy/dashboard/images/person_3.jpg" alt="" />
                 </div>
                 <div class="main_right_content_item_content">
-                    <p>Джеф Каплан</p>
-                    <p>1 янв. 1995 г.</p>
+                    <p>Степан Андреев</p>
+                    <p>электрик</p>
                 </div>
             </div>
             <hr />
@@ -58,8 +69,8 @@
                     <img class="main_right_image" src="/templates/index/metallurgy/dashboard/images/person_4.jpg" alt="" />
                 </div>
                 <div class="main_right_content_item_content">
-                    <p>Джеф Каплан</p>
-                    <p>1 янв. 1995 г.</p>
+                    <p>Андрей Шевелев</p>
+                    <p>рабочий</p>
                 </div>
             </div>
             <hr />
@@ -68,8 +79,8 @@
                     <img class="main_right_image" src="/templates/index/metallurgy/dashboard/images/person_5.jpg" alt="" />
                 </div>
                 <div class="main_right_content_item_content">
-                    <p>Джеф Каплан</p>
-                    <p>1 янв. 1995 г.</p>
+                    <p>Дарья Петрова</p>
+                    <p>начальник смены</p>
                 </div>
             </div>
             <hr />
@@ -78,8 +89,8 @@
                     <img class="main_right_image" src="/templates/index/metallurgy/dashboard/images/person_6.jpg" alt="" />
                 </div>
                 <div class="main_right_content_item_content">
-                    <p>Джеф Каплан</p>
-                    <p>1 янв. 1995 г.</p>
+                    <p>Антон Корнешенко</p>
+                    <p>рабочий</p>
                 </div>
             </div>
             <hr />
@@ -88,8 +99,8 @@
                     <img class="main_right_image" src="/templates/index/metallurgy/dashboard/images/person_7.jpg" alt="" />
                 </div>
                 <div class="main_right_content_item_content">
-                    <p>Джеф Каплан</p>
-                    <p>1 янв. 1995 г.</p>
+                    <p>Виталий Печенькин</p>
+                    <p>рабочий</p>
                 </div>
             </div>
             <hr />
@@ -98,18 +109,18 @@
                     <img class="main_right_image" src="/templates/index/metallurgy/dashboard/images/person_8.jpg" alt="" />
                 </div>
                 <div class="main_right_content_item_content">
-                    <p>Джеф Каплан</p>
-                    <p>1 янв. 1995 г.</p>
+                    <p>Никита Михалкидзе</p>
+                    <p>рабочий</p>
                 </div>
             </div>
             <hr />
             <div class="main_right_content_item">
                 <div class="main_right_content_item_img">
-                    <img class="main_right_image" src="/templates/index/metallurgy/dashboard/images/person_9.jpg" alt="" />
+                    <img class="main_right_image" src="/templates/index/metallurgy/dashboard/images/person_10.jpg" alt="" />
                 </div>
                 <div class="main_right_content_item_content">
-                    <p>Джеф Каплан</p>
-                    <p>1 янв. 1995 г.</p>
+                    <p>Ксения Чакчак</p>
+                    <p>рабочий</p>
                 </div>
             </div>
             <hr />

@@ -27,7 +27,7 @@ h1 {
 	font-size: 28px;
 	font-weight: normal;
 	font-weight: 600;
-	color: var(--color-0);
+	color: var(--title-color);
 }
 
 h2 {
