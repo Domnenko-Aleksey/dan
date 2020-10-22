@@ -6,8 +6,8 @@ from section import section
 from item import item
 from dataset import dataset
 from dataset_generation import dataset_generation
-from model import model
-from model_2 import model_2
+from model_lr import model_lr
+from model_dff import model_dff
 from input_data import input_data
 from alarm import alarm
 from help_page import help_page
@@ -22,8 +22,8 @@ def metallurgy(SITE):
         'item': item,
         'dataset': dataset,
         'dataset_generation': dataset_generation,
-        'model': model,
-        'model_2': model_2,
+        'model_lr': model_lr,  # Линейная регрессия (lr)
+        'model_dff': model_dff,  # Полносвязная сеть прямого распространения Deep Feed Forward (dff)
         'input_data': input_data,
         'alarm': alarm,
         'help': help_page

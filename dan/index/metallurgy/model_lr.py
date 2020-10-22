@@ -12,10 +12,10 @@ from index.metallurgy.classes.Model import Model
 from index.metallurgy.classes.MetallurgyData import MetallurgyData
 
 
-def model(SITE):
-    print('PATH -> index/metallurgy/model.py')
+def model_lr(SITE):
+    print('PATH -> index/metallurgy/model_lr.py')
     SITE.addHeadFile('/templates/index/metallurgy/default/default.css')
-    SITE.addHeadFile('/templates/index/metallurgy/model/model.css')
+    SITE.addHeadFile('/templates/index/metallurgy/model_lr/model_lr.css')
     SITE.addHeadFile('/lib/DAN/DAN.css')
 
     MODEL = Model(SITE)
@@ -25,6 +25,7 @@ def model(SITE):
 
     # ------- ЛИНЕЙНАЯ РЕГРЕССИЯ -------
     df = pd.DataFrame(data)
+    # df.to_csv('metallurgy_dataset.csv', sep=',', encoding='utf-8')
 
     data = df.iloc[:,1:9]
     target = df.iloc[:,10:11]
@@ -56,7 +57,7 @@ def model(SITE):
     ax.plot([0, 100], [0,100], color='#10ca93', label='Модель')
     legend = ax.legend(loc='upper left', fontsize='12')
     legend = ax.legend()
-    fig.savefig('templates/index/metallurgy/model/images/standard_deviations.png')  # Сохраняем график  
+    fig.savefig('templates/index/metallurgy/model_lr/images/lr_standard_deviations.png')  # Сохраняем график  
 
     # Веса модели
     x = np.arange(8)
@@ -70,7 +71,7 @@ def model(SITE):
     plt.xlabel('№ Веса', fontsize=12)
     plt.ylabel('% Влияния', fontsize=12)
     plt.legend()
-    fig.savefig('templates/index/metallurgy/model/images/weights.png')  # Сохраняем график 
+    fig.savefig('templates/index/metallurgy/model_lr/images/lr_weights.png')  # Сохраняем график 
 
     # Предсказанные и истинные значения
     # Задаем смещение равное половине ширины прямоугольника:
@@ -86,7 +87,7 @@ def model(SITE):
     plt.xlabel('% износа', fontsize=12)
     # ax.set_xticklabels(cat_par, fontsize='8')
     ax.legend()
-    fig.savefig('templates/index/metallurgy/model/images/predicted.png')  # Сохраняем график 
+    fig.savefig('templates/index/metallurgy/model_lr/images/lr_predicted.png')  # Сохраняем график 
     # ------- /
 
     # Гистограма износа test.
@@ -95,7 +96,7 @@ def model(SITE):
     ax.set_title('Гистограмма износа гильз', fontdict={'fontsize':16, })
     ax.set_xlabel('Износ')
     ax.set_ylabel('Количество')
-    ax.figure.savefig('templates/index/metallurgy/model/images/hist_test.png')
+    ax.figure.savefig('templates/index/metallurgy/model_lr/images/lr_hist_test.png')
 
     # Гистограма износа target (all).
     target_r = target.to_numpy().reshape(1, 100)[0]
@@ -104,7 +105,7 @@ def model(SITE):
     ax.set_title('Гистограмма износа гильз', fontdict={'fontsize':16})
     ax.set_xlabel('Износ')
     ax.set_ylabel('Количество')
-    ax.figure.savefig('templates/index/metallurgy/model/images/hist_target.png')
+    ax.figure.savefig('templates/index/metallurgy/model_lr/images/lr_hist_target.png')
 
     # График температуры стали.
     steel_temperature = data['p_1'].to_numpy().reshape(1, 100)[0]
@@ -115,7 +116,7 @@ def model(SITE):
     ax.set_xticks([])  # Не выводить ось х
     ax.set_title('Температура стали', fontdict={'fontsize':16})
     ax.set_ylabel('Температура')
-    ax.figure.savefig('templates/index/metallurgy/model/images/steel_temperature.png')
+    ax.figure.savefig('templates/index/metallurgy/model_lr/images/lr_steel_temperature.png')
 
     # График температуры воды.
     water_temperature = data['p_2'].to_numpy().reshape(1, 100)[0]
@@ -126,7 +127,7 @@ def model(SITE):
     ax.set_xticks([])  # Не выводить ось х
     ax.set_title('Температура воды', fontdict={'fontsize':16})
     ax.set_ylabel('Температура')
-    ax.figure.savefig('templates/index/metallurgy/model/images/water_temperature.png')
+    ax.figure.savefig('templates/index/metallurgy/model_lr/images/lr_water_temperature.png')
 
 
     # ------- Таблица сравнения -------
@@ -166,12 +167,12 @@ def model(SITE):
     train_table =   '<table class="table_list">'
     train_table +=      '<tr>'
     train_table +=          '<th>№ гильзы</th>'
+    train_table +=          '<th>' + MODEL.weights[0][3] + '</th>'
     train_table +=          '<th>' + MODEL.weights[1][3] + '</th>'
     train_table +=          '<th>' + MODEL.weights[2][3] + '</th>'
     train_table +=          '<th>' + MODEL.weights[3][3] + '</th>'
     train_table +=          '<th>' + MODEL.weights[4][3] + '</th>'
     train_table +=          '<th>' + MODEL.weights[5][3] + '</th>'
-    train_table +=          '<th>' + MODEL.weights[6][3] + '</th>'
     train_table +=          '<th>Кол-во плавок</th>'
     train_table +=          '<th>Износ, %</th>'
     train_table +=      '</tr>'
@@ -180,7 +181,7 @@ def model(SITE):
     # ------- /
 
 
-    html_model = open('templates/index/metallurgy/model/model.html', 'r', encoding='utf-8').read()
+    html_model = open('templates/index/metallurgy/model_lr/model_lr.html', 'r', encoding='utf-8').read()
     model = Template(html_model)
     render_model = model.render(
         accuracy=accuracy,
@@ -197,7 +198,8 @@ def model(SITE):
         nav_home = '', 
         nav_factory = '',
         nav_database = '',
-        nav_model = 'active',
+        nav_model_dff = '',
+        nav_model_lr = 'active',
         nav_alarm = '',
         nav_help = ''
     )

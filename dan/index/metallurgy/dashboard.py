@@ -72,7 +72,8 @@ def dashboard(SITE):
         nav_home = 'active', 
         nav_factory = '',
         nav_database = '',
-        nav_model = '',
+        nav_model_dff = '',
+        nav_model_lr = '',
         nav_alarm = '',
         nav_help = ''
     )

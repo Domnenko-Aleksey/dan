@@ -58,7 +58,8 @@ def dataset(SITE):
         nav_home = '', 
         nav_factory = '',
         nav_data = 'active',
-        nav_model = '',
+        nav_model_dff = '',
+        nav_model_lr = '',
         nav_alarm = '',
         nav_help = ''
     )
