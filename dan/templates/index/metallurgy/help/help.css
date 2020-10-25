@@ -22,12 +22,24 @@
 
 .block_info_small {
 	display: flex;
+	flex-direction: column;
+	flex-basis: 50%;
 	flex-grow: 1;
-	flex-basis: 255px;
+	min-width: 255px;
 	box-sizing: border-box;
-	height: 200px;
 	padding: 20px;
 	background: #ffffff;
+	border-radius: 15px;
+	box-shadow: rgba(82, 63, 105, 0.05) 0px 0px 13px 0px;
+}
+
+.block_info_title {
+    font-size: 18px;
+	font-weight: 600;
+}
+
+.block_info_small img {
+    width: 100%;
 }
 
 .block_info_large {
@@ -110,4 +122,10 @@ footer {
 	display: flex;
 	flex-grow: 1;
 	height: 55px;
+}
+
+@media screen and (max-width: 905px) {
+	.block_info_small {
+		flex-basis: 100%;
+	}
 }

@@ -9,6 +9,7 @@
 
 .main_left > div {
 	gap:30px;
+	align-items: stretch;
 }
 
 .main_left > div > div {
@@ -139,8 +140,10 @@ footer {
 
 .product_name_item {
 	width: 100%;
+	justify-content: space-between;
 	align-items: center;
 	border-radius:10px;
+	border-bottom: 1px solid #eee;
 }
 
 .product_name {

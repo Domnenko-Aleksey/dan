@@ -1,11 +1,9 @@
 document.addEventListener("DOMContentLoaded", function(event) {
 	DAN.$('button_gen').onclick = ()=>{
 		let form = new FormData()
-		let r = DAN.$('rand').value
-		form.append('r', r)
+		DAN.modal.add('Подождите. Идёт обработка и создание датасета')
 		DAN.ajax('/metallurgy/dataset_generation', form, function(data){
-			DAN.$('dataset_out').innerHTML = data.content
-			console.log('-----------------')
+			document.location.href = '/metallurgy/dataset'
 		})
 	}
 });

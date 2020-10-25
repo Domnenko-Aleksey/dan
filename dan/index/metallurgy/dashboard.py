@@ -4,6 +4,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn import preprocessing
 from sklearn.metrics import accuracy_score
+import tensorflow as tf
+from tensorflow import keras
 from jinja2 import Template
 import sys
 sys.path.append('index/metallurgy/classes')
@@ -15,45 +17,53 @@ def dashboard(SITE):
     SITE.addHeadFile('/templates/index/metallurgy/default/default.css')
     SITE.addHeadFile('/templates/index/metallurgy/dashboard/dashboard.css')
 
-    MODEL = Model(SITE)
-    MD = MetallurgyData(SITE)
-    data = MD.getAll()
+    df = pd.read_csv('index/metallurgy/dataset.csv')
+    # Сохранённая модель - для бустрого запуска без обучения на 1000 эпох
+    model_file = 'index/metallurgy/model_dff.h5'
 
+    data = df.iloc[:,2:11]
+    target = df.iloc[:,11:12]
 
-    # ------- ЛИНЕЙНАЯ РЕГРЕССИЯ -------
-    df = pd.DataFrame(data)
+    print("DATA\n", data.head())
+    print("TARGET\n", target.head())
 
-    data = df.iloc[:,1:9]
-    target = df.iloc[:,10:11]
-
-    X_train, X_test, y_train, y_test = train_test_split(data, target, random_state=42, test_size=0.2)
+    X_train, X_test, Y_train, Y_test = train_test_split(data, target, random_state=20, test_size=0.2)
 
     min_max_scaler = preprocessing.MinMaxScaler()
     X_train_n = min_max_scaler.fit_transform(X_train)
     X_test_n = min_max_scaler.fit_transform(X_test)
 
-    linear_regression = LinearRegression()  # normalize - False
-    model = linear_regression.fit(X_train_n, y_train)
-    predicted = model.predict(X_test_n)
+    x_train_n = np.array(X_train_n, dtype = 'float32')
+    x_test_n = np.array(X_test_n, dtype = 'float32')
+    y_train = np.array(Y_train, dtype = 'float32')
+    y_test = np.array(Y_test, dtype = 'float32')
 
-    accuracy = int(model.score(X_test_n, y_test) * 100)
-    # ------- /
+    y_train_r = y_train.reshape(y_train.shape[0],)
+    y_test_r = y_test.reshape(y_test.shape[0],)
+
+    print('------- ЗАГРУЖАЕМ МОДЕЛЬ -------')
+    model = tf.keras.models.load_model(model_file)
+
+    # Оцениваем модель
+    loss, mae, mape = model.evaluate(X_test_n, y_test_r)
+    print('LOSS, MAE, MAPE', loss, mae, mape)
+    accuracy = round(100 - mape, 2)
+    print('------- Точность -------', accuracy)
+
+    # Делаем предсказание
+    predicted = model.predict(x_test_n)
 
     print('predicted', predicted)
 
-    predicted_html = ''
+    predicted_html = '<h3>Предсказанная стойкость гильз</h3>'
     i = 0
     for pr in predicted:
+        index = Y_test.index[i]
         value = round(pr[0], 2)
-        if (value < 40):
-            css_class = 'wear_low'
-        if (value > 39 and value < 80):
-            css_class = 'wear_medium'
-        if (value > 80):
-            css_class = 'wear_high'
+
         predicted_html += '<div class="product_name_item flex_row">'
-        predicted_html +=   '<span class="product_name">Изделие № <span id="product_name_number">' + str(y_test.index[i] + 1) + '</span></span>'
-        predicted_html +=   '<span class="product_name_wear ' + css_class + '"><span id="product_name_percent">' + str(value) + '</span>%'
+        predicted_html +=   '<span class="product_name">№ <span id="product_name_number">' + str(df.iloc[index, 1]) + '</span></span>'
+        predicted_html +=   '<span class="product_name_wear"><span id="product_name_percent">' + str(value) + '</span>'
         predicted_html += '</div>'
         i += 1
 

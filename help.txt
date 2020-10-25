@@ -15,6 +15,10 @@
 	Возвращаемся в папку приложения
 	cd /github/dan
 
+	# Linux
+	sudo apt install python3-pip
+	sudo apt install python3.8-venv
+	python3.8 -m venv env
 
 УСТАНОВКА aiohttp и jinja2
 	Находясь в виртуальном окружении
@@ -59,7 +63,7 @@
 
 ЗАПУСК ENV
 	/github/dan/env/Scripts/activate.bat  # Windows
-	/github/dan/env/bin/activate  # Linux
+	source env/bin/activate  # Linux
 	cd /github/dan/dan
 
 
