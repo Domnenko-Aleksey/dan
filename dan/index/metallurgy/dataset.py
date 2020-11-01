@@ -14,7 +14,7 @@ def dataset(SITE):
 
     for i in range(df.shape[0]):
         if i == 0:
-            out =   '<table class="table_list">'
+            out =   '<table class="table_border table_m">'
             out +=      '<tr>'
             out +=          '<th>№</th>'
 

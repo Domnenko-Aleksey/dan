@@ -1,0 +1,44 @@
+.model_accuracy {
+	font-size: 24px;
+    font-weight: 400;
+	color: var(--color-2);
+}
+
+.model_accuracy_value {
+	font-size: 48px;
+	font-weight: 800;
+}
+
+.model_accuracy_percent {
+	font-size: 32px;
+	font-weight: 800;
+}
+
+.charts_container.flex_row {
+	justify-content:space-between;
+}
+
+.table_column h2, .training_sample_container h2 {
+	text-align: center;
+	font-size: 22px;
+    font-weight: 600;
+    color: #333;
+}
+
+.table_column {
+    padding: 5px;
+    flex: 1;
+}
+
+.table_column table {
+	margin: auto;
+}
+
+.charts_column img {
+	max-width:100%;
+}
+
+.table_column .table_list th, .table_column .table_list td, .table_column .table_border th, .table_column .table_border td,
+.training_sample_container .table_list th, .training_sample_container .table_list td, .training_sample_container .table_border th, .training_sample_container .table_border td {
+	text-align: center;
+}

@@ -1,0 +1,41 @@
+.mod_catalog_item_left, .mod_catalog_item_right {
+	flex-basis: 300px;
+	flex-grow: 1;
+}
+
+.mod_catalog_item_left img {
+	display: block;
+	width: 100%
+}
+
+.mod_catalog_item_title {
+	font-size: 20px;
+    font-weight: 600;
+    color: #000;
+    padding: 10px 0px;	
+}
+
+.mod_catalog_item_text {
+	padding: 10px 0px;
+    font-size: 14px;
+    color: var(--color-0);
+}
+
+.mod_catalog_item_images_more {
+	display: flex;
+	flex-wrap: wrap;
+	overflow: hidden;
+	align-content: center;
+	margin: 5px 0px;	
+}
+
+.mod_catalog_item_images_more img {
+	display: block;
+	width: 100px;
+	margin: 2px;
+}
+
+.mod_catalog_item_chars {
+	padding: 42px 0px 0px 20px;
+    font-size: 14px;
+}

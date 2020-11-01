@@ -1,0 +1,41 @@
+.content_wrap {
+    overflow-x: auto;
+}
+
+.table_list th, .table_list td {
+    padding: 20px 5px !important;
+}
+
+.gen_container {
+	display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    margin-left: 10px;
+}
+
+.gen_text {
+	line-height: 41px;
+	margin-right: 10px;
+}
+
+#rand {
+	margin:0px 40px 0px 0px;
+}
+
+#button_gen{
+	display: inline-block;
+	padding: 7px 20px;
+	font-size: 20px;
+	color: #ffffff;
+	background-color: var(--color-2);
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+#dataset_out {
+	padding-top:30px;
+}
+
+.table_list th, .table_list td {
+    text-align: center !important;
+}

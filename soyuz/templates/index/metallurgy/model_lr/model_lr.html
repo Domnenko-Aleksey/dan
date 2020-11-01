@@ -1,0 +1,29 @@
+<div class="content_wrap">
+    <h1>Данные модели</h1>
+    <div>Соотношение тренировочной / тестовой выборке = 80 / 20</div>
+    <div class="model_accuracy">Точность модели: 
+        <span class="model_accuracy_value">{{ accuracy }}</span>
+        <span class="model_accuracy_percent">%</span>
+    </div>
+	<div class="charts_container flex_row">
+		<div class="charts_column">
+			<div><img src="/templates/index/metallurgy/model_lr/images/lr_standard_deviations.png" alt=""></div>
+			<div><img src="/templates/index/metallurgy/model_lr/images/lr_weights.png" alt=""></div>
+			<div><img src="/templates/index/metallurgy/model_lr/images/lr_predicted.png" alt=""></div>
+		</div>
+		<div class="table_column">
+			<h2>Таблица сравнения предсказанных и реальных значений</h2>		
+			<div>{{ predicted_table }}</div>
+		</div>
+	</div>
+	<div>
+		<div><img src="/templates/index/metallurgy/model_lr/images/lr_hist_target.png" alt=""></div>
+		<div><img src="/templates/index/metallurgy/model_lr/images/lr_hist_test.png" alt=""></div>
+		<div><img src="/templates/index/metallurgy/model_lr/images/lr_steel_temperature.png" alt=""></div>
+		<div><img src="/templates/index/metallurgy/model_lr/images/lr_water_temperature.png" alt=""></div>
+	</div>
+	<div class="training_sample_container">
+    	<h2>Таблица обучающей выборки</h2>
+		<div>{{ train_table }}</div>
+	</div>
+</div>

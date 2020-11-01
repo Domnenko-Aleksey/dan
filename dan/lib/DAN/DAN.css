@@ -504,7 +504,7 @@ textarea.input {
 }
 
 .table_border th {
-	padding: 30px 20px;
+	padding: 30px 5px;
 }
 
 .table_border td {
@@ -522,7 +522,8 @@ textarea.input {
 	border-collapse		:collapse;
 	border-width		:0;
 	border-spacing		:0;
-
+	margin-top:10px;
+	width: 100%;
 }
 
 .table_m > tbody > tr > td {
@@ -559,9 +560,7 @@ textarea.input {
 		border-bottom		:1px solid #ddd;
 	}
 
-	.table_m > tbody > tr:first-child > td:nth-child(2) > * {
-		display				:none;
-	}
+	
 
 	/* добавить текст из атрибута во вторую ячейку */
 
@@ -576,9 +575,8 @@ textarea.input {
 
 	/* все ячейки начиная со второй строки и второй колонки теперь блоки */
 
-	.table_m > tbody > tr:nth-child(n+2) > td:nth-child(n+2) {
+	.table_m > tbody > tr > td:nth-child(n+2), .table_m > tbody > tr > th:nth-child(n+2) {
 		display				:block;
-		border				:0;
 		border-bottom		:1px solid #ddd;
 	}
 

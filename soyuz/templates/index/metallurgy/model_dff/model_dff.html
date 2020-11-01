@@ -1,0 +1,33 @@
+<div class="content_wrap">
+	<h1>Данные модели</h1>
+	<div class="gen_container">
+		<div class="gen_text">Количество эпох</div> 
+		<input id="gen_epochs" class="input" type="number" value="100" min="10" max="1000">
+		<div id="gen_button">Обучить модель заново</div>
+	</div>
+	<div>&nbsp;</div>
+    <div>Соотношение тренировочной / тестовой выборке = 80 / 20</div>
+    <div class="model_accuracy">Точность модели: 
+        <span class="model_accuracy_value">{{ accuracy }}</span>
+        <span class="model_accuracy_percent">%</span>
+    </div>
+	<div class="charts_container flex_row">
+		<div class="charts_column">
+			<div><img src="/templates/index/metallurgy/model_dff/images/dff_history_mae.png" alt=""></div>
+			<div><img src="/templates/index/metallurgy/model_dff/images/dff_history_acc.png" alt=""></div>
+			<div><img src="/templates/index/metallurgy/model_dff/images/dff_predicted.png" alt=""></div>
+		</div>
+		<div class="table_column">
+			<h2>Таблица сравнения предсказанных и реальных значений</h2>		
+			<div>{{ predicted_table }}</div>
+		</div>
+	</div>
+	<div>
+		<div><img src="/templates/index/metallurgy/model_dff/images/dff_hist_target.png" alt=""></div>
+		<div><img src="/templates/index/metallurgy/model_dff/images/dff_hist_test.png" alt=""></div>
+	</div>
+	<div class="training_sample_container">
+    	<h2>Таблица обучающей выборки</h2>
+		<div>{{ train_table }}</div>
+	</div>
+</div>

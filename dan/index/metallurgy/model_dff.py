@@ -196,7 +196,7 @@ def model_dff(SITE):
         tr += '<td>' + str(Y_test.iloc[i, 0]) + '</td>'
         tr += '<td>' + str(accuracy_item) + '%</td></tr>'
     
-    predicted_table =   '<table class="table_list">'
+    predicted_table =   '<table class="table_list table_m">'
     predicted_table +=      '<tr><th>№ гильзы</th><th>Прогноз стойкости</th><th>Истинная стойкость</th><th>Точность прогноза</th></tr>'
     predicted_table +=      tr
     predicted_table +=  '</table>'
@@ -215,7 +215,7 @@ def model_dff(SITE):
         tr +=       '<td>' + str(Y_train.iloc[i, 0]) + '</td>'
         tr +=   '<tr>'
 
-    train_table =   '<table class="table_list">'
+    train_table =   '<table class="table_list table_m">'
     train_table +=      '<tr>'
     train_table += '<th>Номер гильзы</th>'
     for j in range(X_train.shape[1]):
